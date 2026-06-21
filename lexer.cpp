@@ -205,3 +205,98 @@ Token Lexer::identifierOrKeyword()
     return Token(TOK_IDENTIFIER, word, startLine);
 
 }
+
+std::vector<Token> Lexer::tokenise()
+{
+    std::vector<Token> tokens;
+    
+    while(true)
+    {
+        skipWhitespaceAndComments();
+        if (isAtEnd())
+        {
+            break;
+        }
+
+        char c = peek();
+
+        if (isdigit(c))
+        {
+            tokens.push_back(makeNumber());
+            continue;
+        }
+        
+        if (c == '"')
+        {
+            tokens.push_back(makeString());
+            continue;
+        }
+
+        if (isalpha(c) || c == '_')
+        {
+            tokens.push_back(identifierOrKeyword());
+            continue;
+        }
+
+    //operators and symbols
+    int startLine = line;
+    switch (c)
+    {
+        case '+':
+            advance();
+            tokens.push_back(Token(TOK_PLUS, "+", startLine));
+            break;
+            
+        case '-':
+            advance();
+            tokens.push_back(Token(TOK_MINUS, "-", startLine));
+            break;
+
+        case '*':
+            advance();
+            tokens.push_back(Token(TOK_MULTIPLY, "*", startLine));
+            break;
+
+        case '/':
+            advance();
+            tokens.push_back(Token(TOK_DIVIDE, "/", startLine));
+            break;
+
+        case '%':
+            advance();
+            tokens.push_back(Token(TOK_MODULO, "%", startLine));
+            break;
+
+        case '(':
+            advance();
+            tokens.push_back(Token(TOK_LEFTPARENTHESES, "(", startLine));
+            break;
+
+        case ')':
+            advance();
+            tokens.push_back(Token(TOK_RIGHTPARENTHESES, ")", startLine));
+            break;
+
+        case ':':
+            advance();
+            tokens.push_back(Token(TOK_COLON, ":", startLine));
+            break;
+
+        case ',':
+            advance();
+            tokens.push_back(Token(TOK_COMMA, ",", startLine));
+            break;
+
+        default:
+            std::cerr << "kasme yara I have no idea what this symbol is on line: " << line << ": " << c << std::endl;
+            advance(); // Skip the unexpected character
+            break;
+
+    }
+
+    tokens.push_back(Token(TOK_EOF,"",line));
+    return tokens;
+
+}
+
+
