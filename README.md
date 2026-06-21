@@ -24,7 +24,9 @@ Every key word is a slang word taken from regular vocabulary found in common phr
 | wallahi | Literally means "I swear to God". Originally used only for the most serious promises, but now commonly used in trivial situations. | Used to express the boolean value `True`. |
 | badtameez | A way to describe someone who is poorly behaved. | Used to express the boolean value `False`. |
 | benchod | An extremely common insult used in Bradford. You can search up what it means. | Used to express `<`. |
+| benchod= | An extremely common insult used in Bradford. You can search up what it means. | Used to express `<=`. |
 | vicked | The way "wicked" is commonly pronounced in Bradford. An extremely common word used to describe something good. | Used to express `>`. |
+| vicked= | The way "wicked" is commonly pronounced in Bradford. An extremely common word used to describe something good. | Used to express `>=`. |
 | lala | A way of saying "bro" is the best way I can describe it. | Used to express the boolean operator `NOT`. |
 | geezer | A geezer is just a way to say 'guy' | Used to express the boolean operator `AND`. |
 | top man | Calling someone a 'top man' is a way of complimenting someone and is usually used after someone does a favour for you. | Used to express the boolean operator `OR`. |
@@ -33,15 +35,22 @@ Every key word is a slang word taken from regular vocabulary found in common phr
 | + - * / | | Arithmetic operators remain unchanged |
 
 # Goals
--Right now, just to make it work!
+- Right now, just to make it work!
 
--When it works, maybe use Emscripten to compile to WebAssembly so I can run it on the web.
+- Once it works polish it and optimise the hell out of it
+
+- When it works, maybe use Emscripten to compile to WebAssembly so I can run it on the web.
 
 # Changelog
 
 21/06/2026 v0.01
 
 I took far too long trying to decide the syntax and just decided to wing it and change it as I go if I need to... (hope I don't regret it later) My initial commit shows my initial plan for the syntax. 
+
+21/06/2026 v0.02
+
+I've completed the first version of the lexer. I've also included `benchod=` and `vicked` = in the README.md file as I had forgotten to add it before. I know its inefficient. I'm just trying to get it to work first with the limited C++ I know. I will optimise it though!
+
 
 
 
