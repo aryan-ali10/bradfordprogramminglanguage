@@ -30,3 +30,38 @@ char Lexer::advance()
     if (c == '\n') line++;
     return c;
 }
+
+void Lexer::skipWhitespaceAndComments()
+{
+    while (!isAtEnd())
+    {
+        char c = peek();
+
+        if (c == ' ' || c == '\t' || c == '\r' || c == '\n')
+        {
+            advance();
+        }
+
+        else if (c == 'm' && src.compare(pos, 4, "mush") == 0)
+        {
+            char after = (pos +4 < src.size()) ? src[pos+4] : ' ';
+
+            if (!isalnum(after))
+            {
+                while (!isAtEnd() && peek() != '\n') advance();
+            }
+
+            else
+            {
+                break; //Only happens if its not a comment
+            }
+        
+        }
+
+        else
+        {
+            break; // If it is neither whitespace or a comment
+        }
+    }
+
+}
