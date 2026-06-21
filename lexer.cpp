@@ -171,3 +171,37 @@ std::string Lexer::readWord()
 
  }
 
+Token Lexer::identifierOrKeyword()
+{
+    int startLine = line;
+    std::string word = readWord();
+
+    // Check if its a combination
+    Token multiWordToken = tryMultiWord(word);
+    if (multiWordToken.type != TOK_EOF)
+    {
+        return multiWordToken;
+    }
+
+    // Single word keywords
+    if (word == "wys") return Token(TOK_WYS, word, startLine);
+    if (word == "rs3") return Token(TOK_RS3, word, startLine);
+    if (word == "m140i") return Token(TOK_M140i, word, startLine);
+    if (word == "kasme") return Token(TOK_KASME, word, startLine);
+    if (word == "gora") return Token(TOK_GORA, word, startLine);
+    if (word == "numba") return Token(TOK_NUMBA, word, startLine);
+    if (word == "charva") return Token(TOK_CHARVA, word, startLine);
+    if (word == "wallahi") return Token(TOK_WALLAHI, word, startLine);  
+    if (word == "badtameez") return Token(TOK_BADTAMEEZ, word, startLine);
+    if (word == "geezer") return Token(TOK_GEEZER, word, startLine);
+    if (word == "lala") return Token(TOK_LALA, word, startLine);
+    if (word == "munch") return Token(TOK_MUNCH, word, startLine);
+    if (word == "benchod") return Token(TOK_LESSTHAN, word, startLine);
+    if (word == "vicked") return Token(TOK_GREATERTHAN, word, startLine);
+    if (word == "benchod=") return Token(TOK_LESSTHANOREQUAL, word, startLine);
+    if (word == "vicked=") return Token(TOK_GREATERTHANOREQUAL, word, startLine);
+
+    // If not any of the above then its an identifier for a variable
+    return Token(TOK_IDENTIFIER, word, startLine);
+
+}
