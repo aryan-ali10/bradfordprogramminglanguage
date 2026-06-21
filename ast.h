@@ -1,0 +1,73 @@
+//ast.h produces an abstract syntax tree which by using a tree data structure represents the source code using nodes
+
+#ifndef AST_H
+#define AST_H
+
+#include <string>
+#include <vector>
+
+enum NodeType
+{
+    //expressions
+
+    NODE_NUMBER,
+    NODE_STRING,
+    NODE_BOOLEAN,
+    NODE_VARIABLE,
+    NODE_BINARYOPERATOR,
+    NODE_UNARYOPERATOR,
+    NODE_CALL,
+    
+    // statements
+    NODE_DECLAREVARIABLE,
+    NODE_ASSIGN,
+    NODE_PRINT,
+    NODE_IF,
+    NODE_WHILE,
+    NODE_FUNCDEF,
+    NODE_RETURN,
+    NODE_BLOCK,
+    NODE_EXPRESSIONSTATEMENT
+
+};
+
+struct Node
+{
+    NodeType type;
+    int line;
+
+    // literals
+    double numberValue;
+    std::string stringValue;
+    bool booleanValue;
+    
+    // name to be used for variable/function/parameter
+    std::string name;
+
+    // children
+    Node* left;
+    Node* right;
+    std::vector<Node*> children;
+
+    // if/while
+    Node* condition;
+    Node* thenBlock;
+    Node* elseBlock;
+
+    // function def specific
+    std::vector <std::string> paramNames;
+
+    Node(NodeType t, int ln):
+        type(t),
+        line(ln),
+        numberValue(0),
+        booleanValue(false),
+        left(nullptr),
+        right(nullptr),
+        condition(nullptr),
+        thenBlock(nullptr),
+        elseBlock(nullptr) {}
+};
+
+
+#endif

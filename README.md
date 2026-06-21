@@ -32,7 +32,9 @@ Every key word is a slang word taken from regular vocabulary found in common phr
 | top man | Calling someone a 'top man' is a way of complimenting someone and is usually used after someone does a favour for you. | Used to express the boolean operator `OR`. |
 | munch | A 'munch' is just something to eat. A common phrase would be "grab a quick munch". Equivalent to saying "Grab something to eat" | Used to `print`. |
 | mush | Used as a way of greeting someone. An example of this would be "Alright mush" | Used as a comment marker (anything after this is ignored) |
+| gora | A term used to describe someone white| Used to declare a variable |
 | + - * / | | Arithmetic operators remain unchanged |
+
 
 # Goals
 - Right now, just to make it work!
@@ -49,9 +51,10 @@ I took far too long trying to decide the syntax and just decided to wing it and 
 
 21/06/2026 v0.02
 
-I've completed the first version of the lexer. I've also included `benchod=` and `vicked` = in the README.md file as I had forgotten to add it before. I know its inefficient. I'm just trying to get it to work first with the limited C++ I know. I will optimise it though!
+I've completed the first version of the lexer. I've also included `benchod=` and `vicked=` in the README.md file as I had forgotten to add it before. I know its inefficient. I'm just trying to get it to work first with the limited C++ I know. I will optimise it though!
 
-
+22/06/2026 v0.03
+I've started to implement the parser. It is a little difficult to understand but who doesn't like a challenge! I've also updated the README to include `gora` which I had also forgotten before.
 
 
 
