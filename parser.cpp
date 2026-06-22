@@ -320,3 +320,101 @@ Node* Parser::notExpression()
         return n;
     }
 }
+
+Node* Parser::comparison()
+{
+    Node* left = term();
+    while (check(TOK_LESSTHAN) || check(TOK_GREATERTHAN) || check(TOK_LESSTHANOREQUAL) || check(TOK_GREATERTHANOREQUAL))
+    {
+        int ln = current().line;
+        std::string op;
+        if (check(TOK_LESSTHAN)) op = "<";
+        else if (check(TOK_LESSTHANOREQUAL)) op = "<=";
+        else if (check(TOK_GREATERTHAN)) op = ">";
+        else if (check(TOK_GREATERTHANOREQUAL)) op = ">=";
+        pos++;
+        Node* right = term();
+        Node* n = new Node(NODE_BINARYOPERATOR, ln);
+        n -> name = op;
+        n -> left = left;
+        n -> right = right;
+        left = n;
+    }
+    return left;
+}
+
+Node* Parser::term()
+{
+    Node* left = factor();
+    while (check(TOK_PLUS) || check(TOK_MINUS))
+    {
+        int ln = current().line;
+        std::string op;
+        if (check(TOK_PLUS)) op = "+";
+        else if (check(TOK_MINUS)) op = "-";
+        pos++;
+        Node* right = factor();
+        Node* n = new Node(NODE_BINARYOPERATOR, ln);
+        n -> name = op;
+        n -> left = left;
+        n -> right = right;
+        left = n;
+    }
+    return left;
+}
+
+Node* Parser::factor()
+{
+    Node* left = unary();
+    while (check(TOK_MULTIPLY) || check(TOK_DIVIDE))
+    {
+        int ln = current().line;
+        std::string op;
+        if (check(TOK_MULTIPLY)) op = "*";
+        else if (check(TOK_DIVIDE)) op = "/";
+        pos++;
+        Node* right = unary();
+        Node* n = new Node(NODE_BINARYOPERATOR, ln);
+        n -> name = op;
+        n -> left = left;
+        n -> right = right;
+        left = n;
+    }
+    return left;
+}
+
+Node* Parser::unary()
+{
+    if (check(TOK_MINUS))
+    {
+        int ln = current().line;
+        pos++;
+        Node* operand = unary();
+        Node* n = new Node(NODE_UNARYOPERATOR, ln);
+        n -> name = "-";
+        n -> left = operand;
+        return n;
+    }
+    return primary();
+}
+
+
+Node* Parser::primary()
+{
+    int ln = current().line;
+
+    if (check(TOK_NUMBER))
+    {
+        Node* n = new Node(NODE_NUMBER, ln);
+        n -> numberValue = current().numberValue;
+        pos++;
+        return n;
+    }
+
+    if (check(TOK_STRING))
+    {
+        Node* n = new Node(NODE_STRING, ln);
+        n -> stringValue = current().text;
+        pos++;
+        return n;
+    }
