@@ -18,6 +18,7 @@ Every key word is a slang word taken from regular vocabulary found in common phr
 | innit yara | Typically used interchangeably, but occasionally together. "innit" is short for "isn't it", and "yara" (sometimes "yaar") means friend. Stereotypically known for being used at the end of every sentence. | Used similarly to a semicolon (ends a statement). |
 | rs3 | Refers to the Audi RS3, the stereotypical dream car of someone from Bradford (as someone from Bradford I have to admit I prefer an M3). | Used to declare an `if` statement. |
 | m140i | Refers to the BMW M140i, another stereotype about cars in Bradford. | Used to declare an `else` statement. |
+| rev it | Exactly what it means | Used to declare a `while` loop |
 | kasme | Originally used as a way of expressing a promise in Urdu, but in Bradford has turned into a way of saying "I swear", even when telling a lie. | Used to close a `while` block. |
 | numba | Just the way that people from Yorkshire tend to pronounce "number". | Used to declare an `integer` type. |
 | charva | Similar to the word "chav". Can be used to greet someone, e.g. "Yes charva". |Used to declare a `string` type|
@@ -55,6 +56,10 @@ I've completed the first version of the lexer. I've also included `benchod=` and
 
 22/06/2026 v0.03
 I've started to implement the parser. It is a little difficult to understand but who doesn't like a challenge! I've also updated the README to include `gora` which I had also forgotten before.
+
+22/06/2026 v.0.04
+I've completed the first version of the parser. I'm going to start working on the actual interpreter now! 
+
 
 
 
