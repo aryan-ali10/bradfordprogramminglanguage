@@ -418,3 +418,26 @@ Node* Parser::primary()
         pos++;
         return n;
     }
+
+    if (check(TOK_WALLAHI))
+    {
+        Node*n = new Node(NODE_BOOLEAN, ln);
+        n -> booleanValue = true;
+        return n;
+    }
+
+    if (check(TOK_BADTAMEEZ))
+    {
+        Node*n = new Node(NODE_BOOLEAN, ln);
+        n -> booleanValue = false;
+        return n;
+    }
+
+    if (check(TOK_LEFTPARENTHESES))
+    {
+        pos++;
+        Node*e = expression();
+        consume(TOK_RIGHTPARENTHESES, "expected ')' to close expression");
+        return e;
+    }
+
