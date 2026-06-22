@@ -253,3 +253,70 @@ Node * Parser::returnOrAssignStatement()
     return n;
 }
 
+/*
+------------expressions------------
+precedence in order of low to high:
+orExpression (top man)
+andExpression (geezer)
+notExpression (lala)
+comparison (benchod /vicked / benchod= / vicked=)
+term (+-)
+factor (* /)
+unary (-)
+primary
+*/
+
+Node * Parser::expression()
+{
+    return orExpression();
+}
+
+
+Node* Parser::orExpression()
+{
+    Node* left = andExpression();
+    while (check(TOK_TOPMAN))
+    {
+        int ln = current().line;
+        pos++;
+        Node* right = andExpression();
+        Node* n = new Node(NODE_BINARYOPERATOR, ln);
+        n ->name = "top man";
+        n -> left = left;
+        n ->right = right;
+        left = n;
+    }
+    return left;
+}
+
+Node* Parser::andExpression()
+{
+    Node* left = notExpression();
+    while (check(TOK_GEEZER))
+    {
+        int ln = current().line;
+        pos++;
+        Node* right = notExpression();
+        Node* n = new Node(NODE_BINARYOPERATOR, ln);
+        n -> name = "geezer";
+        n -> left = left;
+        n -> right = right;
+        left = n;
+    }
+    return left;
+}
+
+Node* Parser::notExpression()
+{
+    Node* left = notExpression();
+    while (check(TOK_LALA))
+    {
+        int ln = current().line;
+        pos++;
+        Node* operand = notExpression();
+        Node* n = new Node(NODE_UNARYOPERATOR, ln);
+        n -> name = "lala";
+        n -> left = operand;
+        return n;
+    }
+}
