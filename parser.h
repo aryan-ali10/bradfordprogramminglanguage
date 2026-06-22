@@ -42,7 +42,7 @@ class Parser
     Node* factor();
     Node* unary();
     Node* primary();
-    Node* finishCall();
+    Node* finishCall(Node* callerNameNode);
 
 };
 

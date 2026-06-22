@@ -441,3 +441,42 @@ Node* Parser::primary()
         return e;
     }
 
+    if (check(TOK_IDENTIFIER))
+    {
+            std::string name = current().text;
+            pos++;
+
+            if (check(TOK_LEFTPARENTHESES))
+            {
+                Node* callerNode = new Node(NODE_VARIABLE, ln);
+                callerNode->name = name;
+                return finishCall(callerNode);
+            }
+            Node* n = new Node(NODE_VARIABLE, ln);
+            n->name = name;
+            return n;
+    }
+
+    error("expected an expression (number, string, identifier, wallaho/badtameez or parentheses)");
+    return nullptr;
+
+}
+
+Node* Parser::finishCall(Node* callerNameNode)
+{
+    int ln = callerNameNode -> line;
+    consume(TOK_LEFTPARENTHESES, "expected '(' for function call");
+    Node* call = new Node(NODE_CALL, ln);
+    call -> name = callerNameNode -> name;
+    delete callerNameNode;
+
+    if (!check(TOK_RIGHTPARENTHESES))
+    {
+        do
+        {
+            call -> children.push_back(expression());
+        } while (match(TOK_COMMA));
+    }
+    consume(TOK_RIGHTPARENTHESES, "expected ')' to close function");
+    return call;
+}
