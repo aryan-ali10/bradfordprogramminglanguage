@@ -224,3 +224,32 @@ Node* Parser::DeclareVariable()
     return n;
 }
 
+// munch  (expression) innit yara
+Node* Parser::printStatement()
+{
+    int ln = current().line;
+    consume(TOK_MUNCH, "expected 'munch'");
+    consume(TOK_LEFTPARENTHESES, "expected '(' after 'munch')");
+    Node* val = expression();
+    consume(TOK_RIGHTPARENTHESES, "expected ')' after the argument");
+    consume(TOK_INNITYARA, "expected 'innit yara' after munch statement");
+
+    Node* n = new Node(NODE_PRINT, ln);
+    n-> left = val;
+    return n;
+}
+
+Node * Parser::returnOrAssignStatement()
+{
+    int ln = current().line;
+    consume(TOK_SENDIT, "expected 'send it'");
+
+    Node* n = new Node(NODE_RETURN, ln);
+    if (!check(TOK_INNITYARA))
+    {
+        n -> left = expression();
+    }
+    consume(TOK_INNITYARA, "expected 'innit yara' after 'send it'");
+    return n;
+}
+
