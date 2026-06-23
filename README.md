@@ -60,6 +60,8 @@ I've started to implement the parser. It is a little difficult to understand but
 22/06/2026 v.0.04
 I've completed the first version of the parser. I'm going to start working on the actual interpreter now! 
 
+23/06/2026 v.0.05
+I've finished the first half of the interpreter but still need to fully finish callFunction to handle execution blocks, proper argument mapping, and ReturnSignal exception unwinding for functions. It's a bit of a puzzle handling the scoped environments, but it's coming together!
 
 
 
