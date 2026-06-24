@@ -310,6 +310,38 @@ Value Interpreter::eval(Node* expr, Environment* env)
                 result.booleanValue = toNumber(left) <= toNumber(right);
             }
 
+            else if (op == "==")
+            {
+                if(left.type == VAL_STRING && right.type == VAL_STRING)
+                {
+                    result.type = VAL_BOOL;
+                    result.booleanValue = (left.stringValue == right.stringValue);
+                }
+
+                else if(left.type == VAL_NUMBER && right.type == VAL_NUMBER)
+                {
+                    result.type = VAL_BOOL;
+                    result.booleanValue = (toNumber(left) == toNumber(right));
+                }
+            }
+
+            else if (op == "!=")
+            {
+                if (left.type == VAL_STRING && right.type == VAL_STRING)
+                {
+                    result.type = VAL_BOOL;
+                    result.booleanValue = (left.stringValue != right.stringValue);
+                }
+
+
+                else if (left.type == VAL_NUMBER && right.type != VAL_NUMBER)
+                {
+                    result.type = VAL_BOOL;
+                    result.booleanValue = (toNumber(left) != toNumber(right));
+                }
+
+            }
+
             else if (op == "geezer")
             {
                 result.type = VAL_BOOL;

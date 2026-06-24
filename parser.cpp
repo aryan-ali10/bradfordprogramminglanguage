@@ -270,7 +270,7 @@ precedence in order of low to high:
 orExpression (top man)
 andExpression (geezer)
 notExpression (lala)
-comparison (benchod /vicked / benchod= / vicked=)
+comparison (benchod /vicked / benchod= / vicked= /== /!=)
 term (+-)
 factor (* /)
 unary (-)
@@ -329,7 +329,29 @@ Node* Parser::notExpression()
         n -> left = operand;
         return n;
     }
-    return comparison();
+    return equivalence();
+}
+
+Node* Parser::equivalence()
+{
+    Node* left = comparison();
+
+    while (check(TOK_EQUIVALENT) || check(TOK_NOTEQUIVALENT))
+    {
+        int ln = current().line;
+        std::string op = (check(TOK_EQUIVALENT)) ? "==" : "!=";
+        pos++;
+
+        Node* right = comparison();
+
+        Node* n = new Node(NODE_BINARYOPERATOR, ln);
+        n -> name = op;
+        n -> left = left;
+        n -> right = right;
+
+        left =n;
+    }
+    return left;
 }
 
 Node* Parser::comparison()

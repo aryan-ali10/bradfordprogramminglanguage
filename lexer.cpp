@@ -183,6 +183,20 @@ Token Lexer::identifierOrKeyword()
         return multiWordToken;
     }
 
+    if (word == "benchod" && peek() == '=')
+    {
+        advance();
+        return Token(TOK_LESSTHANOREQUAL, "benchod=", startLine);
+    }
+
+    if (word == "vicked" && peek() == '=')
+    {
+        advance();
+        return Token(TOK_GREATERTHANOREQUAL, "vicked=", startLine);
+    }
+
+
+
     // Single word keywords
     if (word == "wys") return Token(TOK_WYS, word, startLine);
     if (word == "rs3") return Token(TOK_RS3, word, startLine);
@@ -198,9 +212,7 @@ Token Lexer::identifierOrKeyword()
     if (word == "munch") return Token(TOK_MUNCH, word, startLine);
     if (word == "benchod") return Token(TOK_LESSTHAN, word, startLine);
     if (word == "vicked") return Token(TOK_GREATERTHAN, word, startLine);
-    if (word == "benchod=") return Token(TOK_LESSTHANOREQUAL, word, startLine);
-    if (word == "vicked=") return Token(TOK_GREATERTHANOREQUAL, word, startLine);
-
+    
     // If not any of the above then its an identifier for a variable
     return Token(TOK_IDENTIFIER, word, startLine);
 
@@ -286,6 +298,34 @@ std::vector<Token> Lexer::tokenise()
                 advance();
                 tokens.push_back(Token(TOK_COMMA, ",", startLine));
                 break;
+            
+            case '=':
+                advance();
+                if (peek() == '=')
+                {
+                    advance();
+                    tokens.push_back(Token(TOK_EQUIVALENT, "==", startLine));
+                }
+                else
+                {
+                    std::cerr << "kasme yara I have no clue what this symbol is on line: " << line << ": =\n";
+                }
+                break;
+
+            case '!':
+                if (peekNext() == '=')
+                {
+                    advance();
+                    advance();
+                    tokens.push_back(Token(TOK_NOTEQUIVALENT, "!=", startLine));
+                }
+                else
+                {
+                    advance();
+                    std::cerr << "kasme yara I have no clue what this symbol is on line: " << line << ": !\n";
+                }
+                break;
+
 
             default:
                 std::cerr << "kasme yara I have no idea what this symbol is on line: " << line << ": " << c << std::endl;

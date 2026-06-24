@@ -37,6 +37,7 @@ class Parser
     Node* orExpression();
     Node* andExpression();
     Node* notExpression();
+    Node* equivalence();
     Node* comparison();
     Node* term();
     Node* factor();

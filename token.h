@@ -43,6 +43,8 @@ enum TokenType
     TOK_GREATERTHANOREQUAL, // vicked= (>=)
     TOK_LEFTPARENTHESES, // (
     TOK_RIGHTPARENTHESES, // )
+    TOK_EQUIVALENT, // ==
+    TOK_NOTEQUIVALENT, // != 
     TOK_COLON, // :
     TOK_COMMA, // ,
 
