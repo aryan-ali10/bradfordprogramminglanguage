@@ -99,17 +99,17 @@ std::string Lexer::readWord()
  }
 
  Token Lexer::makeString()
- {
+{
     int startLine = line;
     advance();
     std::string s;
     while (!isAtEnd() && peek() != '"')
     {
-        s += advance ();
+        s += advance();
     }
-    if (isAtEnd()) advance;
+    if (!isAtEnd()) advance();
     return Token(TOK_STRING, s, startLine);
- }
+}
 
  Token Lexer::tryMultiWord(const std::string & firstWord)
  {
@@ -238,62 +238,63 @@ std::vector<Token> Lexer::tokenise()
             continue;
         }
 
-    //operators and symbols
-    int startLine = line;
-    switch (c)
-    {
-        case '+':
-            advance();
-            tokens.push_back(Token(TOK_PLUS, "+", startLine));
-            break;
-            
-        case '-':
-            advance();
-            tokens.push_back(Token(TOK_MINUS, "-", startLine));
-            break;
+        //operators and symbols
+        int startLine = line;
+        switch (c)
+        {
+            case '+':
+                advance();
+                tokens.push_back(Token(TOK_PLUS, "+", startLine));
+                break;
+                
+            case '-':
+                advance();
+                tokens.push_back(Token(TOK_MINUS, "-", startLine));
+                break;
 
-        case '*':
-            advance();
-            tokens.push_back(Token(TOK_MULTIPLY, "*", startLine));
-            break;
+            case '*':
+                advance();
+                tokens.push_back(Token(TOK_MULTIPLY, "*", startLine));
+                break;
 
-        case '/':
-            advance();
-            tokens.push_back(Token(TOK_DIVIDE, "/", startLine));
-            break;
+            case '/':
+                advance();
+                tokens.push_back(Token(TOK_DIVIDE, "/", startLine));
+                break;
 
-        case '%':
-            advance();
-            tokens.push_back(Token(TOK_MODULO, "%", startLine));
-            break;
+            case '%':
+                advance();
+                tokens.push_back(Token(TOK_MODULO, "%", startLine));
+                break;
 
-        case '(':
-            advance();
-            tokens.push_back(Token(TOK_LEFTPARENTHESES, "(", startLine));
-            break;
+            case '(':
+                advance();
+                tokens.push_back(Token(TOK_LEFTPARENTHESES, "(", startLine));
+                break;
 
-        case ')':
-            advance();
-            tokens.push_back(Token(TOK_RIGHTPARENTHESES, ")", startLine));
-            break;
+            case ')':
+                advance();
+                tokens.push_back(Token(TOK_RIGHTPARENTHESES, ")", startLine));
+                break;
 
-        case ':':
-            advance();
-            tokens.push_back(Token(TOK_COLON, ":", startLine));
-            break;
+            case ':':
+                advance();
+                tokens.push_back(Token(TOK_COLON, ":", startLine));
+                break;
 
-        case ',':
-            advance();
-            tokens.push_back(Token(TOK_COMMA, ",", startLine));
-            break;
+            case ',':
+                advance();
+                tokens.push_back(Token(TOK_COMMA, ",", startLine));
+                break;
 
-        default:
-            std::cerr << "kasme yara I have no idea what this symbol is on line: " << line << ": " << c << std::endl;
-            advance(); // Skip the unexpected character
-            break;
+            default:
+                std::cerr << "kasme yara I have no idea what this symbol is on line: " << line << ": " << c << std::endl;
+                advance(); // Skip the unexpected character
+                break;
 
+        }
+        
     }
-
     tokens.push_back(Token(TOK_EOF,"",line));
     return tokens;
 
