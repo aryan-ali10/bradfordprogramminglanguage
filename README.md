@@ -55,15 +55,20 @@ I took far too long trying to decide the syntax and just decided to wing it and 
 I've completed the first version of the lexer. I've also included `benchod=` and `vicked=` in the README.md file as I had forgotten to add it before. I know its inefficient. I'm just trying to get it to work first with the limited C++ I know. I will optimise it though!
 
 22/06/2026 v0.03
+
 I've started to implement the parser. It is a little difficult to understand but who doesn't like a challenge! I've also updated the README to include `gora` which I had also forgotten before.
 
 22/06/2026 v.0.04
+
 I've completed the first version of the parser. I'm going to start working on the actual interpreter now! 
 
 23/06/2026 v.0.05
+
 I've finished the first half of the interpreter but still need to fully finish callFunction to handle execution blocks, proper argument mapping, and ReturnSignal exception unwinding for functions. It's a bit of a puzzle handling the scoped environments, but it's coming together!
 
+24/06/2026 v.0.06
 
+The interpreter is semi complete??? I spent far too long trying to get everything to compile. I've fixed a couple of bugs I've found during compilation. It finally compiles which is the main thing for now. 
 
 
 

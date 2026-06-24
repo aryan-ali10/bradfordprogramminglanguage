@@ -140,6 +140,17 @@ Node* Parser::funcDef()
                 pos++;
             }
 
+do
+{
+    if (check(TOK_NUMBA) || check(TOK_CHARVA))
+    {
+        pos++;
+    }
+    
+    Token param = consume(TOK_IDENTIFIER, "expected parameter name");
+    fn->parameterNames.push_back(param.text);
+
+} while (match(TOK_COMMA));
         } while (match(TOK_COMMA));
     }
     consume(TOK_RIGHTPARENTHESES, "expected ')' after parameters");
