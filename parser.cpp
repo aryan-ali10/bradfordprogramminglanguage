@@ -308,8 +308,7 @@ Node* Parser::andExpression()
 
 Node* Parser::notExpression()
 {
-    Node* left = notExpression();
-    while (check(TOK_LALA))
+    if (check(TOK_LALA))
     {
         int ln = current().line;
         pos++;
@@ -319,6 +318,7 @@ Node* Parser::notExpression()
         n -> left = operand;
         return n;
     }
+    return comparison();
 }
 
 Node* Parser::comparison()
