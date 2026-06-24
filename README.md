@@ -44,6 +44,17 @@ Every key word is a slang word taken from regular vocabulary found in common phr
 
 - When it works, maybe use Emscripten to compile to WebAssembly so I can run it on the web.
 
+# To DO
+
+- Implement user input
+
+- Implement for loops
+
+- Implement arrays
+
+- Optimise
+
+
 # Changelog
 
 21/06/2026 v0.01
@@ -70,8 +81,6 @@ I've finished the first half of the interpreter but still need to fully finish c
 
 The interpreter is semi complete??? I spent far too long trying to get everything to compile. I've fixed a couple of bugs I've found during compilation. It finally compiles which is the main thing for now. 
 
+24/06/2026 v.0.07
 
-
-
-
-
+I added a To DO section on the README. I need to start making some test scripts before I start adding more features.
