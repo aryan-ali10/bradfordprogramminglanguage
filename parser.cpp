@@ -65,7 +65,7 @@ Node* Parser::parseProgram()
 Node* Parser::block()
 {
     Node* b = new Node(NODE_BLOCK, current().line);
-    while (!check(TOK_KASME) && !check(TOK_M140i) && !check(TOK_IDENTIFIER))
+    while (!check(TOK_KASME) && !check(TOK_M140i))
     {
         if (check(TOK_SENDIT))
         {
