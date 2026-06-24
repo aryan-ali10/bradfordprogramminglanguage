@@ -55,7 +55,7 @@ struct Node
     Node* elseBlock;
 
     // function def specific
-    std::vector <std::string> paramNames;
+    std::vector <std::string> parameterNames;
 
     Node(NodeType t, int ln):
         type(t),
