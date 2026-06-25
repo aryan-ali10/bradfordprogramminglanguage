@@ -16,9 +16,11 @@ Every key word is a slang word taken from regular vocabulary found in common phr
 | wagwan cuz wys | A common phrase used to greet someone, similar to "What's going on bro?". Literally means "What's going on cousin, what're you saying?". | Used to start a function definition. |
 | send it | Typically used when driving to suggest to the driver to speed up; similar to "floor it". | Used to return a value from a function and also doubles as the assignment operator. |
 | innit yara | Typically used interchangeably, but occasionally together. "innit" is short for "isn't it", and "yara" (sometimes "yaar") means friend. Stereotypically known for being used at the end of every sentence. | Used similarly to a semicolon (ends a statement). |
+| cuzzy | Another way of saying "bro" | Used for user input. `cuzzy("Input here lala: )`|
 | rs3 | Refers to the Audi RS3, the stereotypical dream car of someone from Bradford (as someone from Bradford I have to admit I prefer an M3). | Used to declare an `if` statement. |
 | m140i | Refers to the BMW M140i, another stereotype about cars in Bradford. | Used to declare an `else` statement. |
 | rev it | Exactly what it means | Used to declare a `while` loop |
+| bare times | Exactly the same as saying "a lot of times" | Used to declare a `for` loop |
 | kasme | Originally used as a way of expressing a promise in Urdu, but in Bradford has turned into a way of saying "I swear", even when telling a lie. | Used to close a `while` block. |
 | numba | Just the way that people from Yorkshire tend to pronounce "number". | Used to declare an `integer` type. |
 | charva | Similar to the word "chav". Can be used to greet someone, e.g. "Yes charva". |Used to declare a `string` type|
@@ -45,10 +47,6 @@ Every key word is a slang word taken from regular vocabulary found in common phr
 - When it works, maybe use Emscripten to compile to WebAssembly so I can run it on the web.
 
 # To DO
-
-- Implement user input
-
-- Implement for loops
 
 - Implement arrays
 
@@ -84,3 +82,7 @@ The interpreter is semi complete??? I spent far too long trying to get everythin
 24/06/2026 v.0.07
 
 I added a To DO section on the README. I need to start making some test scripts before I start adding more features.
+
+25/06/2026 v.0.08
+
+I've implemented user input through `cuzzy`. I've also implemented `for` loops through `bare times`. 

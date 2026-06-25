@@ -93,6 +93,7 @@ Node* Parser::statement()
     if (check(TOK_WAGWANCUZ)) return funcDef();
     if (check(TOK_RS3)) return ifStatement();
     if (check(TOK_REVIT)) return whileStatement();
+    if (check(TOK_BARETIMES)) return forStatement();
     if (check(TOK_GORA)) return DeclareVariable();
     if (check(TOK_MUNCH)) return printStatement();
     if (check(TOK_SENDIT)) return returnOrAssignStatement();
@@ -204,6 +205,46 @@ Node* Parser:: whileStatement()
     n-> thenBlock = block();
 
     consume(TOK_KASME, "expected 'kasme' to close 'rev it' block");
+    return n;
+
+}
+
+Node* Parser:: forStatement()
+{
+    int ln = current().line;
+    consume(TOK_BARETIMES, "expected 'bare times'");
+    consume(TOK_LEFTPARENTHESES, "expected '(' after 'bare times'");
+    
+    consume(TOK_GORA, "expected 'gora' in for loop init");
+    if (check(TOK_NUMBA) || check (TOK_CHARVA)) pos++;
+    Token nameTok = consume(TOK_IDENTIFIER, "expecyed loop variable name");
+    consume(TOK_SENDIT, "expected 'send it' in for loop init");
+    Node* initValue = expression();
+    Node* initStatement = new Node(NODE_DECLAREVARIABLE, ln);
+    initStatement -> name = nameTok.text;
+    initStatement -> right = initValue;
+    consume(TOK_COMMA, "expected ',' after for loop init");
+
+    Node* cond = expression();
+    consume(TOK_COMMA, "expected ',' after for loop condition");
+
+    Token incrementNameTok = consume(TOK_IDENTIFIER, "expected loop variable in increment");
+    consume(TOK_SENDIT, "expected 'send it' in for loop increment");
+    Node* incrementValue = expression();
+    Node* incrementStatement = new Node(NODE_ASSIGN, ln);
+    incrementStatement -> name = incrementNameTok.text;
+    incrementStatement -> right = incrementValue;
+
+    consume(TOK_RIGHTPARENTHESES, "expected ')' to close for loop header");
+    consume(TOK_COLON, "expected ':' after for loop header");
+
+    Node* n = new Node(NODE_FOR, ln);
+    n -> left = initStatement;
+    n -> condition = cond;
+    n -> right = incrementStatement;
+    n -> thenBlock = block();
+
+    consume(TOK_KASME, "expected 'kasme' to close 'bare times' block");
     return n;
 
 }

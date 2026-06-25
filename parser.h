@@ -28,6 +28,7 @@ class Parser
     Node* funcDef();
     Node* ifStatement();
     Node* whileStatement();
+    Node* forStatement();
     Node* DeclareVariable();
     Node* printStatement();
     Node* returnOrAssignStatement();

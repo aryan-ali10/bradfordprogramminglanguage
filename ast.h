@@ -18,13 +18,14 @@ enum NodeType
     NODE_UNARYOPERATOR,
     NODE_CALL,
     NODE_INPUT,
-    
+
     // statements
     NODE_DECLAREVARIABLE,
     NODE_ASSIGN,
     NODE_PRINT,
     NODE_IF,
     NODE_WHILE,
+    NODE_FOR,
     NODE_FUNCDEF,
     NODE_RETURN,
     NODE_BLOCK,

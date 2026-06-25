@@ -137,6 +137,12 @@ std::string Lexer::readWord()
         return Token(TOK_WAGWANCUZ, "wagwan cuz", startLine);
     }
 
+    if (firstWord == "bare" && secondWord == "times")
+    {
+        pos = lookPos;
+        return Token(TOK_BARETIMES, "bare times", startLine);
+    }
+
     if (firstWord == "send" && secondWord == "it")
     {
         pos = lookPos;
@@ -334,7 +340,7 @@ std::vector<Token> Lexer::tokenise()
                 break;
 
         }
-        
+
     }
     tokens.push_back(Token(TOK_EOF,"",line));
     return tokens;

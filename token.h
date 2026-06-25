@@ -20,7 +20,8 @@ enum TokenType
     TOK_RS3,       // "rs3" - used to declare an if statement
     TOK_M140i,     // "m140i" - used to an else statement
     TOK_REVIT,     // "revit" - used to declare a while loop
-    TOK_KASME,     // "kasme" - used to end a if or while
+    TOK_KASME,     // "kasme" - used to end an if or while
+    TOK_BARETIMES,
     TOK_GORA,      // "gora" - used to declare a variable
     TOK_NUMBA,     // "numba" - used to declare an integer
     TOK_CHARVA,    // "charva" - used to declare a string

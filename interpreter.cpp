@@ -119,6 +119,20 @@ void Interpreter::execStatement(Node* statement, Environment* env)
             break;
         }
 
+        case NODE_FOR:
+        {
+            Environment forEnv(env);
+            execStatement(statement -> left, &forEnv);
+
+            while (truthy(eval(statement -> condition, &forEnv)))
+            {
+                Environment loopEnv(&forEnv);
+                execBlock(statement -> thenBlock, &loopEnv);
+                execStatement(statement -> right, &forEnv);
+            }
+            break;
+        }
+
         case NODE_RETURN:
         {
             ReturnSignal sig;
