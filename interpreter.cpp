@@ -3,6 +3,7 @@
 #include "interpreter.h"
 #include <iostream>
 #include <cstdlib>
+#include <stdexcept>
 
 Interpreter::Interpreter():globalEnv(nullptr) {}
 
@@ -229,6 +230,42 @@ Value Interpreter::eval(Node* expr, Environment* env)
             return callFunction(expr->name, args, expr->line);
         }
 
+        case NODE_INPUT:
+        {
+            if (expr -> left)
+            {
+                Value promptVal = eval(expr -> left, env);
+                std::cout << toDisplayString(promptVal);
+            }
+
+            std::string line;
+            std:: getline(std::cin, line);
+
+            Value result;
+            try
+            {
+                size_t consumedChars;
+                double n = std::stod(line, &consumedChars);
+
+                if (consumedChars == line.size())
+                {
+                    result.type = VAL_NUMBER;
+                    result.numberValue = n;
+                }
+                else
+                {
+                    result.type = VAL_STRING;
+                    result.stringValue = line;
+                }
+            }
+            catch (const std::exception&)
+            {
+                result.type = VAL_STRING;
+                result.stringValue = line;
+            }
+            return result;
+        }
+
         case NODE_UNARYOPERATOR:
         {
             Value operand = eval(expr -> left, env);
@@ -283,7 +320,15 @@ Value Interpreter::eval(Node* expr, Environment* env)
              else if (op == "/")
             {
                 result.type = VAL_NUMBER;
-                result.numberValue = toNumber(left) / toNumber(right);
+                if (toNumber(right) != 0)
+                {
+                    result.numberValue = toNumber(left) / toNumber(right);
+                }
+                else if (toNumber(right) == 0)
+                {
+                    std::cerr << "kasme yara you cant divide by 0 innit";
+                    exit(1);
+                }
             }
 
             else if (op == "<")

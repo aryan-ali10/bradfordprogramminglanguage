@@ -17,6 +17,7 @@ enum NodeType
     NODE_BINARYOPERATOR,
     NODE_UNARYOPERATOR,
     NODE_CALL,
+    NODE_INPUT,
     
     // statements
     NODE_DECLAREVARIABLE,

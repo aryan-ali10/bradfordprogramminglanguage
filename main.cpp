@@ -22,7 +22,7 @@ int main(int argc, char** argv)
 {
     if (argc < 2)
     {
-        std::cerr << "usage: " << argv[0] << "<yourscript.brad>\n";
+        std::cerr << "usage: " << argv[0] << "<yourscript.bfd>\n";
         return 1;
     }
     std::string source = readFile(argv[1]);

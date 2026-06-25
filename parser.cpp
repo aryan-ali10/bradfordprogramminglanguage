@@ -452,6 +452,22 @@ Node* Parser::primary()
         return n;
     }
 
+    if (check(TOK_CUZZY))
+    {
+        pos++;
+        consume(TOK_LEFTPARENTHESES, "expected '(' after 'cuzzy'");
+
+        Node* n = new Node(NODE_INPUT, ln);
+
+        if (!check(TOK_RIGHTPARENTHESES))
+        {
+            n -> left = expression();
+        }
+
+        consume(TOK_RIGHTPARENTHESES, "expected ')' after 'cuzzy' arguments");
+        return n;
+    }
+
     if (check(TOK_WALLAHI))
     {
         Node*n = new Node(NODE_BOOLEAN, ln);

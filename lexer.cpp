@@ -212,7 +212,8 @@ Token Lexer::identifierOrKeyword()
     if (word == "munch") return Token(TOK_MUNCH, word, startLine);
     if (word == "benchod") return Token(TOK_LESSTHAN, word, startLine);
     if (word == "vicked") return Token(TOK_GREATERTHAN, word, startLine);
-    
+    if (word == "cuzzy") return Token(TOK_CUZZY, word, startLine);
+
     // If not any of the above then its an identifier for a variable
     return Token(TOK_IDENTIFIER, word, startLine);
 

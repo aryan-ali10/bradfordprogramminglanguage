@@ -30,6 +30,7 @@ enum TokenType
     TOK_TOPMAN,    // "topman" - used to declare boolean OR
     TOK_LALA,      // "lala" - used to declare boolean NOT
     TOK_MUNCH,     // "munch" - used to declare print
+    TOK_CUZZY,     // "cuzzy" - used to get input from a user
 
     // Symbols and Operators
     TOK_PLUS,      // +
