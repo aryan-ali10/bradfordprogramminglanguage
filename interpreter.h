@@ -7,11 +7,12 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <memory>
 #include <iostream>
 #include <cstdlib>
 #include "ast.h"
 
-enum ValueType {VAL_NUMBER, VAL_STRING, VAL_BOOL};
+enum ValueType {VAL_NUMBER, VAL_STRING, VAL_BOOL, VAL_ARRAY};
 
 struct Value
 {
@@ -19,8 +20,9 @@ struct Value
     double numberValue;
     std::string stringValue;
     bool booleanValue;
+    std::shared_ptr<std::vector<Value>> arrayValue;
 
-    Value() : type(VAL_NUMBER), numberValue(0), booleanValue(false) {}
+    Value() : type(VAL_NUMBER), numberValue(0), booleanValue(false), arrayValue(nullptr) {}
 };
 
 struct Environment
@@ -89,9 +91,11 @@ class Interpreter
 
         Value callFunction(const std::string & name, std::vector<Value> & args, int line);
 
+
         bool truthy(const Value & v);
         std::string toDisplayString(const Value & v);
         double toNumber(const Value & v);
+        Value& resolveIndexTarget(Node* indexNode, Environment* env, size_t& outIndex);
 
 };
 

@@ -211,7 +211,8 @@ Token Lexer::identifierOrKeyword()
     if (word == "gora") return Token(TOK_GORA, word, startLine);
     if (word == "numba") return Token(TOK_NUMBA, word, startLine);
     if (word == "charva") return Token(TOK_CHARVA, word, startLine);
-    if (word == "wallahi") return Token(TOK_WALLAHI, word, startLine);  
+    if (word == "oioioioioi") return Token(TOK_OIOIOIOIOI, word, startLine);
+    if (word == "wallahi") return Token(TOK_WALLAHI, word, startLine);
     if (word == "badtameez") return Token(TOK_BADTAMEEZ, word, startLine);
     if (word == "geezer") return Token(TOK_GEEZER, word, startLine);
     if (word == "lala") return Token(TOK_LALA, word, startLine);
@@ -296,6 +297,17 @@ std::vector<Token> Lexer::tokenise()
                 tokens.push_back(Token(TOK_RIGHTPARENTHESES, ")", startLine));
                 break;
 
+            case '[':
+                advance();
+                tokens.push_back(Token(TOK_LEFTSQUAREBRACKET, "[", startLine));
+                break;
+
+            case ']':
+                advance();
+                tokens.push_back(Token(TOK_RIGHTSQUREBRACKET, "]", startLine));
+                break;
+            
+                
             case ':':
                 advance();
                 tokens.push_back(Token(TOK_COLON, ":", startLine));

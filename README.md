@@ -24,6 +24,7 @@ Every key word is a slang word taken from regular vocabulary found in common phr
 | kasme | Originally used as a way of expressing a promise in Urdu, but in Bradford has turned into a way of saying "I swear", even when telling a lie. | Used to close a `while` block. |
 | numba | Just the way that people from Yorkshire tend to pronounce "number". | Used to declare an `integer` type. |
 | charva | Similar to the word "chav". Can be used to greet someone, e.g. "Yes charva". |Used to declare a `string` type|
+| oioioioioi | A phrase said when you see or hear about something cool eg. "oioioioioi thats a vicked car innit yara" | Used to declare an array |
 | wallahi | Literally means "I swear to God". Originally used only for the most serious promises, but now commonly used in trivial situations. | Used to express the boolean value `True`. |
 | badtameez | A way to describe someone who is poorly behaved. | Used to express the boolean value `False`. |
 | benchod | An extremely common insult used in Bradford. You can search up what it means. | Used to express `<`. |
@@ -48,7 +49,7 @@ Every key word is a slang word taken from regular vocabulary found in common phr
 
 # To DO
 
-- Implement arrays
+- Implement append and pop for arrays
 
 - Optimise
 
@@ -85,4 +86,8 @@ I added a To DO section on the README. I need to start making some test scripts 
 
 25/06/2026 v.0.08
 
-I've implemented user input through `cuzzy`. I've also implemented `for` loops through `bare times`. 
+I've implemented user input through `cuzzy`. I've also implemented `for` loops through `bare times`.
+
+26/06/2026 v.0.08
+
+After what felt like forever trying to understand how arrays are parsed, I've implemented arrays. 2D Arrays should also work. I need to create a function to return the size of an array, to append/pop items from arrays. 

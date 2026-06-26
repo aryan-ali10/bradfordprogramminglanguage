@@ -98,17 +98,36 @@ Node* Parser::statement()
     if (check(TOK_MUNCH)) return printStatement();
     if (check(TOK_SENDIT)) return returnOrAssignStatement();
     
-    if (check(TOK_IDENTIFIER) && peekNext().type == TOK_SENDIT)
+    if (check(TOK_IDENTIFIER))
     {
-        int ln = current().line;
-        std::string varName = current().text;
-        pos++;
-        pos++;
-        Node* val  = expression();
-        consume(TOK_INNITYARA, "expected 'innit yara' after assignment");
-        Node* n = new Node(NODE_ASSIGN, ln);
-        n -> name = varName;
-        n -> right = val;
+        Node* target = primary();
+
+        if (check(TOK_SENDIT)) // Assignment
+        {
+            int ln = target ->line;
+            pos++;
+            Node* value = expression();
+            consume(TOK_INNITYARA, "expected 'innit yara' after assignment"); 
+            
+            if (target -> type == NODE_INDEX)
+            {
+                Node* n = new Node(NODE_INDEX_ASSIGN, ln);
+                n -> left = target;
+                n -> right = value;
+                return n;
+            }
+            else
+            {
+                Node* n = new Node(NODE_ASSIGN, ln);
+                n -> left = target;
+                n -> right = value;
+                return n;
+            }
+        }
+
+        consume(TOK_INNITYARA, "expected 'innit yara' after expression statement");
+        Node* n = new Node(NODE_EXPRESSIONSTATEMENT, target -> line);
+        n -> left = target;
         return n;
     }
 
@@ -136,14 +155,14 @@ Node* Parser::funcDef()
     {
         do
         {
-            if (check(TOK_NUMBA) || check(TOK_CHARVA))
+            if (check(TOK_NUMBA) || check(TOK_CHARVA) || check(TOK_OIOIOIOIOI))
             {
                 pos++;
             }
 
 do
 {
-    if (check(TOK_NUMBA) || check(TOK_CHARVA))
+    if (check(TOK_NUMBA) || check(TOK_CHARVA) || check(TOK_OIOIOIOIOI))
     {
         pos++;
     }
@@ -255,14 +274,14 @@ Node* Parser::DeclareVariable()
     int ln = current().line;
     consume(TOK_GORA, "expected 'gora'");
 
-    if (check(TOK_NUMBA) || check(TOK_CHARVA))
+    if (check(TOK_NUMBA) || check(TOK_CHARVA) || check(TOK_OIOIOIOIOI))
     {
         pos++;
     }
 
     else
     {
-        error("expected 'numba' or 'charva' after 'gora'");
+        error("expected 'numba', 'charva' or 'oioioioioi' after 'gora'");
     }
 
     Token nameTok = consume(TOK_IDENTIFIER, "expected variable name");
@@ -493,6 +512,22 @@ Node* Parser::primary()
         return n;
     }
 
+    if (check(TOK_LEFTSQUAREBRACKET))
+    {
+        int loopBodyLine = current().line;
+        pos++;
+        Node* array = new Node(NODE_ARRAYLIT, loopBodyLine);
+        if (!check(TOK_RIGHTSQUREBRACKET))
+        {
+            do
+            {
+                array -> children.push_back(expression());
+            } while (match(TOK_COMMA));
+        }
+        consume(TOK_RIGHTSQUREBRACKET, "expected ']' to close array literal");
+        return array;
+    }
+
     if (check(TOK_CUZZY))
     {
         pos++;
@@ -513,6 +548,7 @@ Node* Parser::primary()
     {
         Node*n = new Node(NODE_BOOLEAN, ln);
         n -> booleanValue = true;
+        pos++;
         return n;
     }
 
@@ -520,6 +556,7 @@ Node* Parser::primary()
     {
         Node*n = new Node(NODE_BOOLEAN, ln);
         n -> booleanValue = false;
+        pos++;
         return n;
     }
 
@@ -544,6 +581,18 @@ Node* Parser::primary()
             }
             Node* n = new Node(NODE_VARIABLE, ln);
             n->name = name;
+
+            while (check(TOK_LEFTSQUAREBRACKET))
+            {
+                int indexLine = current().line;
+                pos++;
+                Node* indexExpression = expression();
+                consume(TOK_RIGHTSQUREBRACKET, "expected ']' after array index");
+                Node* indexNode = new Node(NODE_INDEX, indexLine);
+                indexNode -> left = n;
+                indexNode -> right = indexExpression;
+                n = indexNode;
+            }
             return n;
     }
 

@@ -13,6 +13,9 @@ enum NodeType
     NODE_NUMBER,
     NODE_STRING,
     NODE_BOOLEAN,
+    NODE_ARRAYLIT,
+    NODE_INDEX,
+    NODE_INDEX_ASSIGN,
     NODE_VARIABLE,
     NODE_BINARYOPERATOR,
     NODE_UNARYOPERATOR,
@@ -51,7 +54,7 @@ struct Node
     Node* right;
     std::vector<Node*> children;
 
-    // if/while
+    // if/while/for
     Node* condition;
     Node* thenBlock;
     Node* elseBlock;

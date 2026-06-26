@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <stdexcept>
+#include <memory>
 
 Interpreter::Interpreter():globalEnv(nullptr) {}
 
@@ -12,6 +13,7 @@ bool Interpreter::truthy(const Value & v)
     if (v.type == VAL_BOOL) return v.booleanValue;
     if (v.type == VAL_NUMBER) return v.numberValue != 0;
     if (v.type == VAL_STRING) return !v.stringValue.empty();
+    if (v.type == VAL_ARRAY) return v.arrayValue && !v.arrayValue -> empty();
     return false;
 }
 
@@ -28,6 +30,21 @@ std::string Interpreter::toDisplayString(const Value & v)
         }
         return std::to_string(n);
     }
+    if (v.type == VAL_ARRAY)
+    {
+        std::string out = "[";
+        if (v.arrayValue)
+        {
+            for (size_t i = 0; i < v.arrayValue -> size(); i++)
+            {
+                if (i>0) out += ", ";
+                out += toDisplayString((*v.arrayValue)[i]);
+            }
+            out += "]";
+            return out;
+        }
+    }
+
     return "";
 }
 
@@ -83,6 +100,14 @@ void Interpreter::execStatement(Node* statement, Environment* env)
         {
             Value v = eval(statement-> right, env);
             env-> set(statement->name,v);
+            break;
+        }
+
+        case NODE_INDEX_ASSIGN:
+        {
+            size_t index;
+            Value & slot = resolveIndexTarget(statement -> left, env, index);
+            slot = eval(statement -> right, env);
             break;
         }
 
@@ -201,6 +226,64 @@ Value Interpreter::callFunction(const std::string &name, std::vector<Value> & ar
 
 }
 
+Value & Interpreter::resolveIndexTarget(Node* indexNode, Environment* env, size_t & outIndex)
+{
+    if (indexNode -> type != NODE_INDEX)
+    {
+        std::cerr << "kasme yara, I can only index into an array on line " << indexNode -> line << "\n";
+        exit(1);
+    }
+
+    Value base;
+
+    if (indexNode -> left -> type == NODE_VARIABLE)
+    {
+        if (!env -> has (indexNode -> left -> name))
+        {
+            std::cerr << "kasme yara, what you on about '" << indexNode -> left -> name << "' (line " << indexNode -> line << ")\n";
+            exit(1);
+        }
+        base = env -> get(indexNode -> left -> name);
+    }
+    else if (indexNode -> left -> type == NODE_INDEX)
+    {
+        // nested indexes
+        size_t innerIndex;
+        Value & inner = resolveIndexTarget(indexNode -> left, env, innerIndex);
+        base = inner;
+    }
+
+    else
+    {
+        std::cerr << "kasme yara, can't index into that expression (line " << indexNode -> line << ")\n";
+        exit(1);
+    }
+
+    if (base.type != VAL_ARRAY || !base.arrayValue)
+    {
+        std::cerr << "kasme yara, that's not an array muppet (line " << indexNode -> line << ")\n";
+        exit(1);
+    }
+
+    Value indexVal = eval(indexNode -> right, env);
+    double indexNum = toNumber(indexVal);
+    if (indexNum<0)
+    {
+        std::cerr << "kasme yara , index can't be negative innit (line " << indexNode->line << ")\n";
+        exit(1);
+    }
+
+    size_t index = (size_t)indexNum;
+    if (index >= base.arrayValue -> size())
+    {
+        std::cerr << "kasme yara, index " << index << " out of range (size " << base.arrayValue -> size() << ") on line " << indexNode -> line << "\n";
+        exit(1);
+    }
+
+    outIndex = index;
+    return (*base.arrayValue)[index];
+}
+
 Value Interpreter::eval(Node* expr, Environment* env)
 {
     switch(expr -> type)
@@ -232,6 +315,25 @@ Value Interpreter::eval(Node* expr, Environment* env)
         case NODE_VARIABLE:
         {
             return env -> get(expr -> name);
+        }
+
+        case NODE_ARRAYLIT:
+        {
+            Value v;
+            v.type = VAL_ARRAY;
+            v.arrayValue = std::make_shared<std::vector<Value>>();
+            for (Node* elementExpr : expr -> children)
+            {
+                v.arrayValue -> push_back(eval(elementExpr, env));
+            }
+            return v;
+        }
+
+        case NODE_INDEX:
+        {
+            size_t index;
+            Value result = resolveIndexTarget(expr, env, index);
+            return result;
         }
 
         case NODE_CALL:

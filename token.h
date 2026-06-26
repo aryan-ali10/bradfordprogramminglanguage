@@ -11,6 +11,7 @@ enum TokenType
     TOK_NUMBER,
     TOK_STRING,
     TOK_IDENTIFIER,
+    TOK_ARRAYLITERAL,
 
     // The slang!!
     TOK_WAGWANCUZ, // "wagwan cuz" 1st part of the function definition
@@ -25,6 +26,7 @@ enum TokenType
     TOK_GORA,      // "gora" - used to declare a variable
     TOK_NUMBA,     // "numba" - used to declare an integer
     TOK_CHARVA,    // "charva" - used to declare a string
+    TOK_OIOIOIOIOI,  // "oioioioioi" - used to declare an array
     TOK_WALLAHI,   // "wallahi" - used to declare boolean TRUE
     TOK_BADTAMEEZ, // "badtameez" - used to declare boolean FALSE
     TOK_GEEZER,    // "geezer" - used to declare boolean AND
@@ -45,6 +47,10 @@ enum TokenType
     TOK_GREATERTHANOREQUAL, // vicked= (>=)
     TOK_LEFTPARENTHESES, // (
     TOK_RIGHTPARENTHESES, // )
+    TOK_LEFTSQUAREBRACKET, // [
+    TOK_RIGHTSQUREBRACKET, // ]
+    TOK_LEFTCURLYBRACKET, // {
+    TOK_RIGHTCURLYBRACKET, // }
     TOK_EQUIVALENT, // ==
     TOK_NOTEQUIVALENT, // != 
     TOK_COLON, // :
