@@ -336,6 +336,58 @@ Value Interpreter::eval(Node* expr, Environment* env)
             return result;
         }
 
+        case NODE_ARRAY_APPEND:
+        {
+            Value arrayVal = eval(expr -> left, env);
+            if (arrayVal.type != VAL_ARRAY || !arrayVal.arrayValue)
+            {
+                std::cerr << "kasme yara, 'ye man' only works on an array innit (line " << expr -> line << ")\n";
+                exit(1);
+            }
+            Value valueToAppend = eval(expr -> right, env);
+            arrayVal.arrayValue -> push_back(valueToAppend);
+            return Value();
+        }
+
+        case NODE_ARRAY_POP:
+        {
+            Value arrayVal = eval(expr -> left, env);
+            if (arrayVal.type != VAL_ARRAY || !arrayVal.arrayValue)
+            {
+                std::cerr << "kasme yara 'safe' only works on an array innit (line " << expr -> line << ")\n";
+                exit(1);
+            }
+
+            if (arrayVal.arrayValue -> empty())
+            {
+                std::cerr << "kasme yara, ya can't return a value of an empty array ya muppet (line " << expr -> line << ")\n";
+                exit(1);
+            }
+
+            Value last = arrayVal.arrayValue -> back();
+            arrayVal.arrayValue -> pop_back();
+            return last;
+        }
+
+        case NODE_ARRAY_DELETE:
+        {
+            Value arrayVal = eval(expr-> left, env);
+            if (arrayVal.type != VAL_ARRAY || !arrayVal.arrayValue)
+            {
+                std::cerr << "kasme yara 'fak off' only works in an array innit (line " << expr -> line << ")\n";
+                exit(1);
+            }
+            Value indexValue = eval(expr -> right, env);
+            double indexNumber = toNumber(indexValue);
+            if (indexNumber < 0 || (size_t)indexNumber >= arrayVal.arrayValue -> size())
+            {
+                std::cerr << "kasme yara, that index isn't even in the array ya muppet (line " << expr -> line << ")\n";
+                exit(1);
+            }
+            arrayVal.arrayValue -> erase(arrayVal.arrayValue -> begin() + (size_t)indexNumber);
+            return Value();
+        }
+
         case NODE_CALL:
         {
             std::vector<Value> args;

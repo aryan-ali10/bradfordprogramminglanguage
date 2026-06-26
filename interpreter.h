@@ -46,6 +46,17 @@ struct Environment
         std::cerr << "kasme yara, what you on about '" << name <<  "' \n";
         exit(1); 
     }
+
+    Value& getReference(const std::string & name)
+    {
+        auto it = vars.find(name);
+
+        if (it != vars.end()) return it -> second;
+        if (parent) return parent -> getReference(name);
+
+        std::cerr << "kasme yara, what you on about '" << name << "'\n";
+        exit(1);
+    }
     
     // Create new variable if not found
     void set(const std::string & name, Value v)

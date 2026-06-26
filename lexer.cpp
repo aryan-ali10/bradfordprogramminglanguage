@@ -168,6 +168,18 @@ std::string Lexer::readWord()
         return Token(TOK_TOPMAN, "top man", startLine);
     }
 
+    if (firstWord == "ye" && secondWord == "man")
+    {
+        pos = lookPos;
+        return Token(TOK_YEMAN, "ye man", startLine);
+    }
+
+    if (firstWord == "fak" && secondWord == "off")
+    {
+        pos = lookPos;
+        return Token(TOK_FAKOFF, "fak off", startLine);
+    }
+
     // If no combinations are found then treat it as a single word token
     pos = savedPos;
     line = savedLine;
@@ -220,7 +232,8 @@ Token Lexer::identifierOrKeyword()
     if (word == "benchod") return Token(TOK_LESSTHAN, word, startLine);
     if (word == "vicked") return Token(TOK_GREATERTHAN, word, startLine);
     if (word == "cuzzy") return Token(TOK_CUZZY, word, startLine);
-
+    if (word == "safe") return Token(TOK_SAFE, word, startLine);
+    
     // If not any of the above then its an identifier for a variable
     return Token(TOK_IDENTIFIER, word, startLine);
 

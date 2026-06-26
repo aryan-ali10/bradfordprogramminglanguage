@@ -66,23 +66,8 @@ Node* Parser::block()
 {
     Node* b = new Node(NODE_BLOCK, current().line);
     while (!check(TOK_KASME) && !check(TOK_M140i))
-    {
-        if (check(TOK_SENDIT))
-        {
-            TokenType after = tokens[pos+1].type;
-            bool looksLikeReturn = (after == TOK_INNITYARA) ||
-                after == TOK_NUMBER || after == TOK_STRING || after == TOK_IDENTIFIER ||
-                after == TOK_WALLAHI || after == TOK_BADTAMEEZ || after == TOK_LEFTPARENTHESES ||
-                after == TOK_MINUS || after == TOK_LALA;
-            if (!looksLikeReturn)
-            {
-                break;
-            }
-
-        }
-        
+    {        
         b->children.push_back(statement());
-    
     }
     return b;
 }
@@ -160,17 +145,9 @@ Node* Parser::funcDef()
                 pos++;
             }
 
-do
-{
-    if (check(TOK_NUMBA) || check(TOK_CHARVA) || check(TOK_OIOIOIOIOI))
-    {
-        pos++;
-    }
-    
-    Token param = consume(TOK_IDENTIFIER, "expected parameter name");
-    fn->parameterNames.push_back(param.text);
-
-} while (match(TOK_COMMA));
+            Token parameter = consume(TOK_IDENTIFIER, "expected parameter name");
+            fn -> parameterNames.push_back(parameter.text);
+            
         } while (match(TOK_COMMA));
     }
     consume(TOK_RIGHTPARENTHESES, "expected ')' after parameters");
@@ -178,7 +155,7 @@ do
 
     fn -> thenBlock = block();
 
-    consume (TOK_SENDIT, "expected 'send it' to close the function body");
+    consume (TOK_KASME, "expected 'kasme' to close the function body");
 
     return fn;
 
@@ -233,10 +210,10 @@ Node* Parser:: forStatement()
     int ln = current().line;
     consume(TOK_BARETIMES, "expected 'bare times'");
     consume(TOK_LEFTPARENTHESES, "expected '(' after 'bare times'");
-    
+
     consume(TOK_GORA, "expected 'gora' in for loop init");
     if (check(TOK_NUMBA) || check (TOK_CHARVA)) pos++;
-    Token nameTok = consume(TOK_IDENTIFIER, "expecyed loop variable name");
+    Token nameTok = consume(TOK_IDENTIFIER, "expected loop variable name");
     consume(TOK_SENDIT, "expected 'send it' in for loop init");
     Node* initValue = expression();
     Node* initStatement = new Node(NODE_DECLAREVARIABLE, ln);
@@ -582,16 +559,59 @@ Node* Parser::primary()
             Node* n = new Node(NODE_VARIABLE, ln);
             n->name = name;
 
-            while (check(TOK_LEFTSQUAREBRACKET))
+            while (true)
             {
-                int indexLine = current().line;
-                pos++;
-                Node* indexExpression = expression();
-                consume(TOK_RIGHTSQUREBRACKET, "expected ']' after array index");
-                Node* indexNode = new Node(NODE_INDEX, indexLine);
-                indexNode -> left = n;
-                indexNode -> right = indexExpression;
-                n = indexNode;
+                if (check(TOK_LEFTSQUAREBRACKET))
+                {
+                    int indexLine = current().line;
+                    pos++;
+                    Node* indexExpression = expression();
+                    consume(TOK_RIGHTSQUREBRACKET, "expected ']' after array");
+                    Node* indexNode = new Node(NODE_INDEX, indexLine);
+                    indexNode -> left = n;
+                    indexNode -> right = indexExpression;
+                    n = indexNode;
+                    continue;
+                }
+
+                if (check(TOK_YEMAN))
+                {
+                    int opLine = current().line;
+                    pos++;
+                    consume(TOK_LEFTPARENTHESES, "expected '(' after 'ye man'");
+                    Node* valueExpression = expression();
+                    consume(TOK_RIGHTPARENTHESES, "expected ')' to close 'ye man'");
+                    Node* appendNode = new Node(NODE_ARRAY_APPEND, opLine);
+                    appendNode -> left = n;
+                    appendNode -> right = valueExpression;
+                    n = appendNode;
+                    continue;
+                }
+
+                if (check(TOK_SAFE))
+                {
+                    int opLine = current().line;
+                    pos++;
+                    Node* popNode = new Node(NODE_ARRAY_POP, opLine);
+                    popNode -> left = n;
+                    n = popNode;
+                    continue;
+                }
+
+                if (check(TOK_FAKOFF))
+                {
+                    int opLine = current().line;
+                    pos++;
+                    consume(TOK_LEFTPARENTHESES, "expected '(' after 'fak off'");
+                    Node* indexExpression = expression();
+                    consume(TOK_RIGHTPARENTHESES, "expected ')' to close 'fak off'");
+                    Node* deleteNode = new Node(NODE_ARRAY_DELETE, opLine);
+                    deleteNode -> left = n;
+                    deleteNode -> right = indexExpression;
+                    n = deleteNode;
+                    continue;
+                }
+                break;
             }
             return n;
     }
