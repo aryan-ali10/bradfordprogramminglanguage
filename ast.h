@@ -24,6 +24,7 @@ enum NodeType
     NODE_UNARYOPERATOR,
     NODE_CALL,
     NODE_INPUT,
+    NODE_SIZE,
 
     // statements
     NODE_DECLAREVARIABLE,

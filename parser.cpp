@@ -521,6 +521,19 @@ Node* Parser::primary()
         return n;
     }
 
+    if (check(TOK_CHOW))
+    {
+        pos++;
+        consume(TOK_LEFTPARENTHESES, "expected '(' after 'chow'");
+
+        Node* n = new Node(NODE_SIZE, ln);
+        n -> left = expression();
+
+        consume (TOK_RIGHTPARENTHESES, "expected ')' after argument");
+        return n;
+    }
+
+
     if (check(TOK_WALLAHI))
     {
         Node*n = new Node(NODE_BOOLEAN, ln);

@@ -37,6 +37,7 @@ enum TokenType
     TOK_YEMAN,          // "ye man" - used to append a value to an array
     TOK_SAFE,           // "safe" - used to pop off a value of an array and return the value
     TOK_FAKOFF,         // "fak off" - used to delete an item from an array at a given index
+    TOK_CHOW,           // "chow" - used to return the size of an array         
 
     // Symbols and Operators
     TOK_PLUS,      // +

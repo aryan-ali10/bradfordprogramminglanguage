@@ -233,7 +233,7 @@ Token Lexer::identifierOrKeyword()
     if (word == "vicked") return Token(TOK_GREATERTHAN, word, startLine);
     if (word == "cuzzy") return Token(TOK_CUZZY, word, startLine);
     if (word == "safe") return Token(TOK_SAFE, word, startLine);
-    
+    if (word == "chow") return Token(TOK_CHOW, word, startLine);
     // If not any of the above then its an identifier for a variable
     return Token(TOK_IDENTIFIER, word, startLine);
 

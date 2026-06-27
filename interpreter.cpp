@@ -434,6 +434,31 @@ Value Interpreter::eval(Node* expr, Environment* env)
             return result;
         }
 
+        case NODE_SIZE:
+        {
+            Value target = eval(expr -> left, env);
+            Value result;
+            result.type = VAL_NUMBER;
+
+            if (target.type = VAL_ARRAY)
+            {
+                result.numberValue = target.arrayValue ? (double)target.arrayValue -> size() : 0;
+            }
+
+            else if (target.type = VAL_STRING)
+            {
+                result.stringValue = (double)target.stringValue.size();
+            }
+
+            else
+            {
+                std::cerr << "kasme yara ya can only find the 'size' of a string or an array";
+                exit(1);
+            }
+            return result;
+        }
+        
+
         case NODE_UNARYOPERATOR:
         {
             Value operand = eval(expr -> left, env);

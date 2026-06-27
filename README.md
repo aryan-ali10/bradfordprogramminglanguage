@@ -17,6 +17,8 @@ Every key word is a slang word taken from regular vocabulary found in common phr
 | send it | Typically used when driving to suggest to the driver to speed up; similar to "floor it". | Used to return a value from a function and also doubles as the assignment operator. |
 | innit yara | Typically used interchangeably, but occasionally together. "innit" is short for "isn't it", and "yara" (sometimes "yaar") means friend. Stereotypically known for being used at the end of every sentence. | Used similarly to a semicolon (ends a statement). |
 | cuzzy | Another way of saying "bro" | Used for user input. `cuzzy("Input here lala: )`|
+| rami | Short for 'harami' i.e something is so 'crazy' or 'wild' or 'good' that it is almost too good to be halal | Used to return an ASCII value from a given ASCII code between 0-255 |
+| stage3remap | Stereotypically known as the most common car modification in Bradford | Used to return random number between given limits |
 | rs3 | Refers to the Audi RS3, the stereotypical dream car of someone from Bradford (as someone from Bradford I have to admit I prefer an M3). | Used to declare an `if` statement. |
 | m140i | Refers to the BMW M140i, another stereotype about cars in Bradford. | Used to declare an `else` statement. |
 | rev it | Exactly what it means | Used to declare a `while` loop |
@@ -28,6 +30,7 @@ Every key word is a slang word taken from regular vocabulary found in common phr
 | ye man | The way it is pronounced is the reason why it made it into the language, it is quite obviously used to agree with something | Used to append to an array |
 | safe | Common way to say bye to someone | Used to pop the element from the end of an array |
 | fak off | Literally what it looks like | Used to delete the value at the end of an array |
+| chow | More used in Birmingham but I've been hearing it strangely more often | Used to return the size of a given array |
 | wallahi | Literally means "I swear to God". Originally used only for the most serious promises, but now commonly used in trivial situations. | Used to express the boolean value `True`. |
 | badtameez | A way to describe someone who is poorly behaved. | Used to express the boolean value `False`. |
 | benchod | An extremely common insult used in Bradford. You can search up what it means. | Used to express `<`. |
@@ -52,7 +55,9 @@ Every key word is a slang word taken from regular vocabulary found in common phr
 
 # To DO
 
-- Implement a function to return the size of an array,
+- Way to display a window and draw
+
+- Emscripten -> website??
 
 - Optimise
 
@@ -98,6 +103,10 @@ After what felt like forever trying to understand how arrays are parsed, I've im
 26/06/2026 v.0.10
 
 I've added the ability to append, pop and delete an item from an array but still need to implement a function to return the size of an array.
+
+27/06/2026 v.0.11
+
+I've added a function (chow()) to return the size of an array. Also added a function (`stage3remap(min,max)`) to return a random value within a given range. Also added a function (`rami(code)`) to return an ASCII value given its code.
 
 
 
