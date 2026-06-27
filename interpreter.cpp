@@ -615,7 +615,7 @@ Value Interpreter::eval(Node* expr, Environment* env)
                 }
 
 
-                else if (left.type == VAL_NUMBER && right.type != VAL_NUMBER)
+                else if (left.type == VAL_NUMBER && right.type == VAL_NUMBER)
                 {
                     result.type = VAL_BOOL;
                     result.booleanValue = (toNumber(left) != toNumber(right));
