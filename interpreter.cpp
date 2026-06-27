@@ -604,6 +604,11 @@ Value Interpreter::eval(Node* expr, Environment* env)
                     result.type = VAL_BOOL;
                     result.booleanValue = (toNumber(left) == toNumber(right));
                 }
+                else
+                {
+                    result.type == VAL_BOOL;
+                    result.booleanValue = false;
+                }
             }
 
             else if (op == "!=")
@@ -619,6 +624,12 @@ Value Interpreter::eval(Node* expr, Environment* env)
                 {
                     result.type = VAL_BOOL;
                     result.booleanValue = (toNumber(left) != toNumber(right));
+                }
+
+                else
+                {
+                    result.type = VAL_BOOL;
+                    result.booleanValue = true;
                 }
 
             }
