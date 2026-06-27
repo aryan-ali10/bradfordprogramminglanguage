@@ -96,14 +96,14 @@ void Interpreter::execStatement(Node* statement, Environment* env)
         case NODE_DECLAREVARIABLE:
         {
             Value v = eval(statement-> right, env);
-            env-> set(statement->name,v);
+            env-> declare(statement -> name,v);
             break;
         }
 
         case NODE_ASSIGN:
         {
             Value v = eval(statement-> right, env);
-            env-> set(statement->name,v);
+            env-> set(statement-> left -> name,v);
             break;
         }
 
