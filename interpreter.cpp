@@ -444,12 +444,12 @@ Value Interpreter::eval(Node* expr, Environment* env)
             Value result;
             result.type = VAL_NUMBER;
 
-            if (target.type = VAL_ARRAY)
+            if (target.type == VAL_ARRAY)
             {
                 result.numberValue = target.arrayValue ? (double)target.arrayValue -> size() : 0;
             }
 
-            else if (target.type = VAL_STRING)
+            else if (target.type == VAL_STRING)
             {
                 result.stringValue = (double)target.stringValue.size();
             }
