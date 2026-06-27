@@ -483,7 +483,7 @@ Value Interpreter::eval(Node* expr, Environment* env)
             return result;
         }
 
-        case NODE_ASCIICHAR:;
+        case NODE_ASCIICHAR:
         {
             Value codeVal = eval(expr -> left, env);
             double codeD = toNumber(codeVal);
