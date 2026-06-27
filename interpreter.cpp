@@ -61,6 +61,8 @@ double Interpreter::toNumber(const Value & v)
 
 void Interpreter::run(Node* program)
 {
+    startTime = std::chrono::steady_clock::now();
+
     for (Node* statement : program -> children)
     {
         if (statement -> type == NODE_FUNCDEF)
@@ -500,6 +502,17 @@ Value Interpreter::eval(Node* expr, Environment* env)
             result.stringValue = std::string(1, (char)code);
             return result;
 
+        }
+
+        case NODE_CPUTIME:
+        {
+            auto now = std::chrono::steady_clock::now();
+            std::chrono::duration<double> elapsed = now - startTime;
+
+            Value result;
+            result.type = VAL_NUMBER;
+            result.numberValue = elapsed.count();
+            return result;
         }
 
         case NODE_UNARYOPERATOR:

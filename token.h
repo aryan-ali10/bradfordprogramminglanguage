@@ -40,7 +40,7 @@ enum TokenType
     TOK_CHOW,           // "chow" - used to return the size of an array         
     TOK_RAMI,           // "rami"- used to return a character based on a given ASCII code            
     TOK_STAGE3REMAP,    // "stage3remap" - used to return a random number from a given range ie. stage3remap(min,max)
-
+    TOK_PAGGERED,       // "paggered" - used to return CPU time
 
     // Symbols and Operators
     TOK_PLUS,      // +

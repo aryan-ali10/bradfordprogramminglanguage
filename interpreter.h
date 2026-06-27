@@ -9,6 +9,7 @@
 #include <map>
 #include <memory>
 #include <iostream>
+#include <chrono>
 #include <cstdlib>
 #include <random>
 #include "ast.h"
@@ -97,6 +98,7 @@ class Interpreter
         Environment globalEnv;
         std::map <std::string, Node*> functions;
         std::mt19937 rng;
+        std::chrono::steady_clock::time_point startTime;
 
         void execBlock(Node* block, Environment* env);
         void execStatement(Node* statement, Environment* env);

@@ -42,6 +42,7 @@ Every key word is a slang word taken from regular vocabulary found in common phr
 | top man | Calling someone a 'top man' is a way of complimenting someone and is usually used after someone does a favour for you. | Used to express the boolean operator `OR`. |
 | munch | A 'munch' is just something to eat. A common phrase would be "grab a quick munch". Equivalent to saying "Grab something to eat" | Used to `print`. |
 | mush | Used as a way of greeting someone. An example of this would be "Alright mush" | Used as a comment marker (anything after this is ignored) |
+| paggered | A way of expressing fatigue, i.e "I feel paggered after that run" | Used to return CPU time (in seconds) |
 | gora | A term used to describe someone white| Used to declare a variable |
 | + - * / | | Arithmetic operators remain unchanged |
 

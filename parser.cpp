@@ -563,6 +563,17 @@ Node* Parser::primary()
         return n;
     }
 
+    if (check(TOK_PAGGERED))
+    {
+        pos++;
+        consume(TOK_LEFTPARENTHESES, "expected '(' after 'paggered'");
+        consume(TOK_RIGHTPARENTHESES, "expected ')' after 'paggered' (takes no arguments)");
+
+        Node* n = new Node(NODE_CPUTIME,ln);
+        return n;
+
+    }
+
     if (check(TOK_WALLAHI))
     {
         Node*n = new Node(NODE_BOOLEAN, ln);

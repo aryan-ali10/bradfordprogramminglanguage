@@ -42,7 +42,8 @@ enum NodeType
 
     // built in functions
     NODE_APPEND,
-    NODE_POP
+    NODE_POP,
+    NODE_CPUTIME
 
 };
 

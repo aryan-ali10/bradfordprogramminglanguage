@@ -19,7 +19,7 @@ wagwan cuz wys fib(numba n):
     kasme
 
     send it b innit yara
-send it
+kasme
 
 gora numba count send it n innit yara
 gora numba i send it 0 innit yara
@@ -27,3 +27,5 @@ rev it (i benchod count):
     munch(fib(i)) innit yara
     i send it i + 1 innit yara
 kasme
+
+munch(paggered()) innit yara

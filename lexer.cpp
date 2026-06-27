@@ -236,6 +236,7 @@ Token Lexer::identifierOrKeyword()
     if (word == "chow") return Token(TOK_CHOW, word, startLine);
     if (word == "rami") return Token(TOK_RAMI, word, startLine);
     if (word == "stage3remap") return Token(TOK_STAGE3REMAP, word, startLine);
+    if (word == "paggered") return Token(TOK_PAGGERED, word, startLine);
 
     // If not any of the above then its an identifier for a variable
     return Token(TOK_IDENTIFIER, word, startLine);
