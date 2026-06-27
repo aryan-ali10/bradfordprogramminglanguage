@@ -451,7 +451,7 @@ Value Interpreter::eval(Node* expr, Environment* env)
 
             else if (target.type == VAL_STRING)
             {
-                result.stringValue = (double)target.stringValue.size();
+                result.numberValue = (double)target.stringValue.size();
             }
 
             else
