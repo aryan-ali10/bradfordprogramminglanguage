@@ -38,6 +38,9 @@ enum TokenType
     TOK_SAFE,           // "safe" - used to pop off a value of an array and return the value
     TOK_FAKOFF,         // "fak off" - used to delete an item from an array at a given index
     TOK_CHOW,           // "chow" - used to return the size of an array         
+    TOK_RAMI,           // "rami"- used to return a character based on a given ASCII code            
+    TOK_STAGE3REMAP,    // "stage3remap" - used to return a random number from a given range ie. stage3remap(min,max)
+
 
     // Symbols and Operators
     TOK_PLUS,      // +

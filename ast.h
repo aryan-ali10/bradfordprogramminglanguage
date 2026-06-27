@@ -25,6 +25,8 @@ enum NodeType
     NODE_CALL,
     NODE_INPUT,
     NODE_SIZE,
+    NODE_RANDOM,
+    NODE_ASCIICHAR,
 
     // statements
     NODE_DECLAREVARIABLE,

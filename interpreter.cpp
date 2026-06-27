@@ -6,7 +6,11 @@
 #include <stdexcept>
 #include <memory>
 
-Interpreter::Interpreter():globalEnv(nullptr) {}
+Interpreter::Interpreter():globalEnv(nullptr)
+{
+    std::random_device rd;
+    rng.seed(rd());
+}
 
 bool Interpreter::truthy(const Value & v) 
 {
@@ -458,6 +462,45 @@ Value Interpreter::eval(Node* expr, Environment* env)
             return result;
         }
         
+        case NODE_RANDOM:
+        {
+            Value minVal = eval(expr -> left, env);
+            Value maxVal = eval(expr -> right, env);
+            double minD = toNumber(minVal);
+            double maxD = toNumber(maxVal);
+
+            long long low = (long long)minD;
+            long long high = (long long)maxD;
+            if (low>high)
+            {
+                std::cerr << "kasme yara, 'stage3remap' minimum can't be greater than maximum";
+                exit(1);
+            }
+            std::uniform_int_distribution<long long> dist(low,high);
+            Value result;
+            result.type = VAL_NUMBER;
+            result.numberValue = (double)dist(rng);
+            return result;
+        }
+
+        case NODE_ASCIICHAR:;
+        {
+            Value codeVal = eval(expr -> left, env);
+            double codeD = toNumber(codeVal);
+            int code = (int)codeD;
+
+            if (code < 0 || code >255)
+            {
+                std::cerr << "kasme yara, 'rami' wants an ASCII code 0-255 innit (line " << expr -> line << ")\n";
+                exit(1);
+            }
+
+            Value result;
+            result.type = VAL_STRING;
+            result.stringValue = std::string(1, (char)code);
+            return result;
+
+        }
 
         case NODE_UNARYOPERATOR:
         {

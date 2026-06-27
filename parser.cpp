@@ -533,6 +533,33 @@ Node* Parser::primary()
         return n;
     }
 
+    if (check(TOK_STAGE3REMAP))
+    {
+        pos++;
+        consume(TOK_LEFTPARENTHESES, "expected '(' after 'stage3remap'");
+
+        Node* n = new Node(NODE_RANDOM, ln);
+        n -> left = expression();
+
+        consume(TOK_COMMA, "expected ',' in between arguments");
+        n -> right = expression();
+
+        consume(TOK_RIGHTPARENTHESES, "expected ')' after arguments");
+        return n;
+
+    }
+
+    if (check(TOK_RAMI))
+    {
+        pos++;
+        consume(TOK_LEFTPARENTHESES, "expected '(' after 'rami'");
+
+        Node* n = new Node(NODE_ASCIICHAR, ln);
+        n -> left = expression();
+
+        consume(TOK_RIGHTPARENTHESES, "expected ')' after 'rami' argument");
+        return n;
+    }
 
     if (check(TOK_WALLAHI))
     {

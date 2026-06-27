@@ -10,6 +10,7 @@
 #include <memory>
 #include <iostream>
 #include <cstdlib>
+#include <random>
 #include "ast.h"
 
 enum ValueType {VAL_NUMBER, VAL_STRING, VAL_BOOL, VAL_ARRAY};
@@ -95,6 +96,7 @@ class Interpreter
     private:
         Environment globalEnv;
         std::map <std::string, Node*> functions;
+        std::mt19937 rng;
 
         void execBlock(Node* block, Environment* env);
         void execStatement(Node* statement, Environment* env);
