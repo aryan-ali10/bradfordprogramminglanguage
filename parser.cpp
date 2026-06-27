@@ -227,6 +227,8 @@ Node* Parser:: forStatement()
     Token incrementNameTok = consume(TOK_IDENTIFIER, "expected loop variable in increment");
     consume(TOK_SENDIT, "expected 'send it' in for loop increment");
     Node* incrementValue = expression();
+    Node* incrementVar = new Node(NODE_VARIABLE, ln);
+    incrementVar -> name = incrementNameTok.text;
     Node* incrementStatement = new Node(NODE_ASSIGN, ln);
     incrementStatement -> name = incrementNameTok.text;
     incrementStatement -> right = incrementValue;
