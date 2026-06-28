@@ -344,14 +344,19 @@ Value Interpreter::eval(Node* expr, Environment* env)
 
         case NODE_ARRAY_APPEND:
         {
-            Value arrayVal = eval(expr -> left, env);
-            if (arrayVal.type != VAL_ARRAY || !arrayVal.arrayValue)
+            if (expr -> left -> type != NODE_VARIABLE)
+            {
+                std::cerr << "kasme yara, 'ye man' only works on a variable innit (line " << expr -> line << ")\n";
+                exit(1);
+            }
+            Value& arrayRef = env -> getReference(expr -> left -> name);
+            if (arrayRef.type != VAL_ARRAY || !arrayRef.arrayValue)
             {
                 std::cerr << "kasme yara, 'ye man' only works on an array innit (line " << expr -> line << ")\n";
                 exit(1);
             }
             Value valueToAppend = eval(expr -> right, env);
-            arrayVal.arrayValue -> push_back(valueToAppend);
+            arrayRef.arrayValue -> push_back(valueToAppend);
             return Value();
         }
 
@@ -619,7 +624,7 @@ Value Interpreter::eval(Node* expr, Environment* env)
                 }
                 else
                 {
-                    result.type == VAL_BOOL;
+                    result.type = VAL_BOOL;
                     result.booleanValue = false;
                 }
             }

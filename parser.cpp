@@ -230,7 +230,7 @@ Node* Parser:: forStatement()
     Node* incrementVar = new Node(NODE_VARIABLE, ln);
     incrementVar -> name = incrementNameTok.text;
     Node* incrementStatement = new Node(NODE_ASSIGN, ln);
-    incrementStatement -> name = incrementNameTok.text;
+    incrementStatement -> left = incrementVar;
     incrementStatement -> right = incrementValue;
 
     consume(TOK_RIGHTPARENTHESES, "expected ')' to close for loop header");
