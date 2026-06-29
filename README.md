@@ -6,7 +6,7 @@ This is an interpreter (not a compiler) so no machine code or executable is prod
 
 # Why
 
-The main reason for this project is to help me get more comfortable with using C++. This is my first open source C++ project. It is also a farwell homage to Bradford, a temporary final gift before moving out to go to University.
+The main reason for this project is to help me get more comfortable with using C++. This is my first open source C++ project. It is also a farewell homage to Bradford, a temporary final gift before moving out to go to University.
 
 # The Language
 Every key word is a slang word taken from regular vocabulary found in common phrases.
@@ -49,6 +49,14 @@ Every key word is a slang word taken from regular vocabulary found in common phr
 | pollEvent | | SDL2 poll event, returns wallahi/badtameez |
 | closewindow | | Used to close a window |
 | showit | | Used to present/flip renderer |
+| wipe | | Used to clear a window |
+| colour | | Used to colour a window |
+| drawpoint | | Used to draw a point |
+| drawline | | Used to draw a line |
+| drawrectangle | | Used to draw a rectangle |
+| fillrectangle | | Used to draw a fill rectangle |
+
+
 
 
 # Goals
@@ -113,5 +121,8 @@ I've added the ability to append, pop and delete an item from an array but still
 
 I've added a function (chow()) to return the size of an array. Also added a function (`stage3remap(min,max)`) to return a random value within a given range. Also added a function (`rami(code)`) to return an ASCII value given its code.
 
+29/06/2026 v.0.12
+
+I've added stdl2 support.
 
 

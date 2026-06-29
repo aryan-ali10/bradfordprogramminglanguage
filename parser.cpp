@@ -84,6 +84,7 @@ Node* Parser::statement()
     if (check(TOK_SENDIT)) return returnOrAssignStatement();
     if (check(TOK_CLOSEWINDOW)) return closeWindow();
     if (check(TOK_SHOWIT)) return present();
+    if (check(TOK_WIPE)) return clearScreen();
     
     if (check(TOK_IDENTIFIER))
     {
@@ -321,6 +322,13 @@ Node* Parser::closeWindow()
     return new Node(NODE_CLOSE, ln);
 }
 
+Node* Parser::clearScreen()
+{
+    int ln = current().line;
+    consume(TOK_WIPE, "expected 'wipe'");
+    consume(TOK_INNITYARA, "expected 'innit yara' after wipe");
+    return new Node(NODE_WIPE, ln);
+}
 
 
 /*
@@ -604,6 +612,84 @@ Node* Parser::primary()
         consume(TOK_RIGHTPARENTHESES, "expected ')'");
         return new Node(NODE_POLLEVENT, ln);
     }
+
+    if (check(TOK_COLOUR))
+    {
+        pos++;
+        consume(TOK_LEFTPARENTHESES, "expected '(' after colour");
+        Node* n = new Node(NODE_COLOUR, ln);
+        n -> children.push_back(expression()); // red
+        consume(TOK_COMMA, "expected ',' in between arguments");
+        n -> children.push_back(expression()); // green
+        consume(TOK_COMMA, "expected ',' in between arguments");
+        n -> children.push_back(expression()); // blue
+        consume(TOK_COMMA, "expected ',' in between arguments");   
+        n -> children.push_back(expression()); // alpha
+        consume(TOK_RIGHTPARENTHESES, "expected ')' after  'colour' arguments");
+        return n;
+    }
+
+    if (check(TOK_DRAWPOINT))
+    {
+        pos++;
+        consume(TOK_LEFTPARENTHESES, "expected '(' after 'drawPoint'");
+        Node* n = new Node(NODE_DRAWPOINT, ln);
+        n -> children.push_back(expression());  // x pos
+        consume(TOK_COMMA, "expected ',' in between arguments");
+        n -> children.push_back(expression());  // y pos
+        consume(TOK_RIGHTPARENTHESES, "expected ')' after 'drawPoint' arguments");
+        return n;
+    }
+
+    if (check(TOK_DRAWLINE))
+    {
+        pos++;
+        consume(TOK_LEFTPARENTHESES, "expected '(' after 'drawLine'");
+        Node* n = new Node(NODE_DRAWLINE, ln);
+        n -> children.push_back(expression()); // x1 pos
+        consume(TOK_COMMA, "expected ',' in between arguments");
+        n -> children.push_back(expression()); // x2 pos
+        consume(TOK_COMMA, "expected ',' in between arguments");
+        n -> children.push_back(expression()); // y1 pos
+        consume(TOK_COMMA, "expected ',' in between arguments");
+        n -> children.push_back(expression()); // y2 pos
+        consume(TOK_RIGHTPARENTHESES, "expected ')' after 'drawLine' arguments");
+        return n;
+    }
+
+    if (check(TOK_DRAWRECTANGLE))
+    {
+        pos++;
+        consume(TOK_LEFTPARENTHESES, "expected '(' after 'drawRectangle'");
+        Node* n = new Node(NODE_DRAWRECTANGLE, ln);
+        n -> children.push_back(expression()); // x pos
+        consume(TOK_COMMA, "expected ',' in between arguments");
+        n -> children.push_back(expression()); // y pos
+        consume(TOK_COMMA, "expected ',' in between arguments");
+        n -> children.push_back(expression()); // width
+        consume(TOK_COMMA, "expected ',' in between arguments");
+        n -> children.push_back(expression()); // height
+        consume(TOK_RIGHTPARENTHESES, "expected ')' after 'drawRectangle' arguments");
+        return n;
+    }
+
+    if (check(TOK_FILLRECTANGLE))
+    {
+        pos++;
+        consume(TOK_LEFTPARENTHESES, "expected '(' after 'fillRectangle'");
+        Node* n = new Node(NODE_FILLRECTANGLE, ln);
+        n -> children.push_back(expression()); // x pos
+        consume(TOK_COMMA, "expected ',' in between arguments");
+        n -> children.push_back(expression()); // y pos
+        consume(TOK_COMMA, "expected ',' in between arguments");
+        n -> children.push_back(expression()); // width
+        consume(TOK_COMMA, "expected ',' in between arguments");
+        n -> children.push_back(expression()); // height
+        consume(TOK_RIGHTPARENTHESES, "expected ')' after 'fillRectangle' arguments");
+        return n;
+    }
+
+
 
     if (check(TOK_PAGGERED))
     {

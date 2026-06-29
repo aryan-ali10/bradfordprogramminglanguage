@@ -204,6 +204,14 @@ void Interpreter::execStatement(Node* statement, Environment* env)
             break;
         }
 
+        case NODE_WIPE:
+        {
+            if (sdlRenderer) SDL_RenderClear(sdlRenderer);
+            break;
+        }
+
+
+
         default:
             std::cerr <<"kasme yara, what ya on about on line " << statement->line << ", dunno how to execute this statement type\n";
             exit(1);
@@ -710,6 +718,57 @@ Value Interpreter::eval(Node* expr, Environment* env)
             v.booleanValue = true;
             return v;
         }
+
+        case NODE_COLOUR:
+        {
+            int r = (int)toNumber(eval(expr -> children[0], env));
+            int g = (int)toNumber(eval(expr -> children[1], env));
+            int b = (int)toNumber(eval(expr -> children[2], env));
+            int a = (int)toNumber(eval(expr -> children[3], env));
+            if (sdlRenderer) SDL_SetRenderDrawColor(sdlRenderer, r, g, b, a);
+            return Value();
+        }
+        
+        case NODE_DRAWPOINT:
+        {
+            int x = (int)toNumber(eval(expr -> children[0], env));
+            int y = (int)toNumber(eval(expr -> children[1], env));
+            if (sdlRenderer) SDL_RenderDrawPoint(sdlRenderer, x, y);
+            return Value();
+        }
+
+        case NODE_DRAWLINE:
+        {
+            int x1 = (int)toNumber(eval(expr -> children[0], env));
+            int y1 = (int)toNumber(eval(expr -> children[1], env));
+            int x2 = (int)toNumber(eval(expr -> children[2], env));
+            int y2 = (int)toNumber(eval(expr -> children[3], env));
+            if (sdlRenderer) SDL_RenderDrawLine(sdlRenderer, x1, y1, x2, y2);
+            return Value();
+        }
+
+        case NODE_DRAWRECTANGLE:
+        {
+            SDL_Rect rect;
+            rect.x = (int)toNumber(eval(expr -> children[0], env));
+            rect.y = (int)toNumber(eval(expr -> children[1], env));
+            rect.w = (int)toNumber(eval(expr -> children[2], env));
+            rect.h = (int)toNumber(eval(expr -> children[3], env));
+            if (sdlRenderer) SDL_RenderDrawRect(sdlRenderer, &rect);
+            return Value();
+        }
+
+        case NODE_FILLRECTANGLE:
+        {
+            SDL_Rect rect;
+            rect.x = (int)toNumber(eval(expr -> children[0], env));
+            rect.y = (int)toNumber(eval(expr -> children[1], env));
+            rect.w = (int)toNumber(eval(expr -> children[2], env));
+            rect.h = (int)toNumber(eval(expr -> children[3], env));
+            if (sdlRenderer) SDL_RenderFillRect(sdlRenderer, &rect);
+            return Value();          
+        }
+
         default:
         std::cerr << "kasme yara, I have no clue how to evaluate this expression on line " << expr-> line << "\n";
         exit(1); 

@@ -243,6 +243,12 @@ Token Lexer::identifierOrKeyword()
     if (word == "closeWindow") return Token(TOK_CLOSEWINDOW, word, startLine);
     if (word == "pollEvent") return Token(TOK_POLLEVENT, word, startLine);
     if (word == "showit") return Token(TOK_SHOWIT, word, startLine);
+    if (word == "wipe") return Token(TOK_WIPE, word, startLine);
+    if (word == "colour") return Token(TOK_COLOUR, word, startLine);
+    if (word == "drawLine") return Token(TOK_DRAWLINE, word, startLine);
+    if (word == "drawPoint") return Token(TOK_DRAWPOINT, word, startLine);
+    if (word == "drawRectangle") return Token(TOK_DRAWRECTANGLE, word, startLine);
+    if (word == "fillRectangle") return Token(TOK_FILLRECTANGLE, word, startLine);
 
     // If not any of the above then its an identifier for a variable
     return Token(TOK_IDENTIFIER, word, startLine);

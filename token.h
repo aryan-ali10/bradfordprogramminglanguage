@@ -45,6 +45,12 @@ enum TokenType
     TOK_CLOSEWINDOW,        // "closeWindow" - used to terminate window
     TOK_POLLEVENT,          // "pollEvent" - poll events, returns wallahi/badtameez
     TOK_SHOWIT,             // "showit" - used to present/flip the renderer
+    TOK_COLOUR,             // "colour" - sets draw colour: colour(r, g, b, a)
+    TOK_WIPE,               // "wipe" - used to clear the screen
+    TOK_DRAWLINE,           // "drawLine" - used to drawline to window
+    TOK_DRAWPOINT,          // "drawPoint" - used to draw point to window
+    TOK_DRAWRECTANGLE,      // "drawRectangle" - used to draw the outline of a rectangle
+    TOK_FILLRECTANGLE,      // "fillRectangle" - used to fill a rectangle
 
     // Symbols and Operators
     TOK_PLUS,               // +
