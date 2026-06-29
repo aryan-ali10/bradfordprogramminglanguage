@@ -43,7 +43,13 @@ enum NodeType
     // built in functions
     NODE_APPEND,
     NODE_POP,
-    NODE_CPUTIME
+    NODE_CPUTIME,
+
+    // SDL2
+    NODE_GITTUP,
+    NODE_CLOSE,
+    NODE_SHOWIT,
+    NODE_POLLEVENT,
 
 };
 

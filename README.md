@@ -45,6 +45,10 @@ Every key word is a slang word taken from regular vocabulary found in common phr
 | paggered | A way of expressing fatigue, i.e "I feel paggered after that run" | Used to return CPU time (in seconds) |
 | gora | A term used to describe someone white| Used to declare a variable |
 | + - * / | | Arithmetic operators remain unchanged |
+| gittup | Commonly used before 'mush' or 'charva' when greeting someone | Used to create a window |
+| pollEvent | | SDL2 poll event, returns wallahi/badtameez |
+| closewindow | | Used to close a window |
+| showit | | Used to present/flip renderer |
 
 
 # Goals

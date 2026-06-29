@@ -46,6 +46,9 @@ class Parser
     Node* primary();
     Node* finishCall(Node* callerNameNode);
 
+    Node* closeWindow();
+    Node* present();
+    Node* clearScreen();
 };
 
 #endif

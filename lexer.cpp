@@ -238,6 +238,12 @@ Token Lexer::identifierOrKeyword()
     if (word == "stage3remap") return Token(TOK_STAGE3REMAP, word, startLine);
     if (word == "paggered") return Token(TOK_PAGGERED, word, startLine);
 
+    //sdl2
+    if (word == "gittup") return Token(TOK_GITTUP, word, startLine);
+    if (word == "closeWindow") return Token(TOK_CLOSEWINDOW, word, startLine);
+    if (word == "pollEvent") return Token(TOK_POLLEVENT, word, startLine);
+    if (word == "showit") return Token(TOK_SHOWIT, word, startLine);
+
     // If not any of the above then its an identifier for a variable
     return Token(TOK_IDENTIFIER, word, startLine);
 

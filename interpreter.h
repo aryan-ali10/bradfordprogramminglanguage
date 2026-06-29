@@ -11,6 +11,7 @@
 #include <iostream>
 #include <chrono>
 #include <cstdlib>
+#include <SDL2/SDL.h>
 #include <random>
 #include "ast.h"
 
@@ -99,6 +100,9 @@ class Interpreter
         std::map <std::string, Node*> functions;
         std::mt19937 rng;
         std::chrono::steady_clock::time_point startTime;
+
+        SDL_Window* sdlWindow = nullptr;
+        SDL_Renderer* sdlRenderer = nullptr;
 
         void execBlock(Node* block, Environment* env);
         void execStatement(Node* statement, Environment* env);

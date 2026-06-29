@@ -82,6 +82,8 @@ Node* Parser::statement()
     if (check(TOK_GORA)) return DeclareVariable();
     if (check(TOK_MUNCH)) return printStatement();
     if (check(TOK_SENDIT)) return returnOrAssignStatement();
+    if (check(TOK_CLOSEWINDOW)) return closeWindow();
+    if (check(TOK_SHOWIT)) return present();
     
     if (check(TOK_IDENTIFIER))
     {
@@ -289,7 +291,7 @@ Node* Parser::printStatement()
     return n;
 }
 
-Node * Parser::returnOrAssignStatement()
+Node* Parser::returnOrAssignStatement()
 {
     int ln = current().line;
     consume(TOK_SENDIT, "expected 'send it'");
@@ -302,6 +304,24 @@ Node * Parser::returnOrAssignStatement()
     consume(TOK_INNITYARA, "expected 'innit yara' after 'send it'");
     return n;
 }
+
+Node* Parser::present()
+{
+    int ln = current().line;
+    consume(TOK_SHOWIT, "expected 'showit");
+    consume(TOK_INNITYARA, "expected 'innit yara' after show it");
+    return new Node(NODE_SHOWIT, ln);
+}
+
+Node* Parser::closeWindow()
+{
+    int ln = current().line;
+    consume(TOK_CLOSEWINDOW, "expected 'closeWindow'");
+    consume(TOK_INNITYARA, "expected 'innit yara' after closeWindow");
+    return new Node(NODE_CLOSE, ln);
+}
+
+
 
 /*
 ------------expressions------------
@@ -561,6 +581,28 @@ Node* Parser::primary()
 
         consume(TOK_RIGHTPARENTHESES, "expected ')' after 'rami' argument");
         return n;
+    }
+
+    if (check(TOK_GITTUP))
+    {
+        pos++;
+        consume(TOK_LEFTPARENTHESES, "expected '(' after gittup");
+        Node* n = new Node(NODE_GITTUP, ln);
+        n -> children.push_back(expression()); // width
+        consume(TOK_COMMA, "expected ',' in between arguments");
+        n -> children.push_back(expression()); // height
+        consume(TOK_COMMA, "expected ',' in between arguments");
+        n -> children.push_back(expression()); // title
+        consume(TOK_RIGHTPARENTHESES, "expected ')' after  'gittup' arguments");
+        return n;
+    }
+
+    if (check(TOK_POLLEVENT))
+    {
+        pos++;
+        consume(TOK_LEFTPARENTHESES, "expected '(' after 'pollEvent'");
+        consume(TOK_RIGHTPARENTHESES, "expected ')'");
+        return new Node(NODE_POLLEVENT, ln);
     }
 
     if (check(TOK_PAGGERED))

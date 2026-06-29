@@ -190,6 +190,20 @@ void Interpreter::execStatement(Node* statement, Environment* env)
             break;
         }
 
+        case NODE_CLOSE:
+        {
+            if (sdlRenderer) { SDL_DestroyRenderer(sdlRenderer); sdlRenderer = nullptr; }
+            if (sdlWindow)   { SDL_DestroyWindow(sdlWindow);     sdlWindow   = nullptr; }
+            SDL_Quit();
+            break;
+        }
+
+        case NODE_SHOWIT:
+        {
+            if (sdlRenderer) SDL_RenderPresent(sdlRenderer);
+            break;
+        }
+
         default:
             std::cerr <<"kasme yara, what ya on about on line " << statement->line << ", dunno how to execute this statement type\n";
             exit(1);
@@ -665,6 +679,36 @@ Value Interpreter::eval(Node* expr, Environment* env)
             }
             
             return result;
+        }
+
+        case NODE_GITTUP:
+        {
+            int w = (int)toNumber(eval(expr -> children[0], env));
+            int h = (int)toNumber(eval(expr -> children[1], env));
+            std::string title = toDisplayString(eval(expr -> children[2], env));
+            SDL_Init(SDL_INIT_VIDEO);
+            sdlWindow = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, SDL_WINDOW_SHOWN);
+            sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, SDL_RENDERER_ACCELERATED);
+            return Value();
+        }
+
+        case NODE_POLLEVENT:
+        {
+            SDL_Event event;
+            while (SDL_PollEvent(&event))
+            {
+                if (event.type == SDL_QUIT)
+                {
+                    Value v;
+                    v.type = VAL_BOOL;
+                    v.booleanValue = false;
+                    return v;
+                }
+            }
+            Value v;
+            v.type = VAL_BOOL;
+            v.booleanValue = true;
+            return v;
         }
         default:
         std::cerr << "kasme yara, I have no clue how to evaluate this expression on line " << expr-> line << "\n";
